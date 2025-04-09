@@ -1,0 +1,7 @@
+.vscode/
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+# nel .gitignore vengono inseriti i file che non devono essere salvati su github
