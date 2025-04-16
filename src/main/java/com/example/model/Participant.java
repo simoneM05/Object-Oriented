@@ -10,6 +10,11 @@ public class Participant extends User {
         this.teamId = teamId;
     }
 
+    public Participant(User user, String teamId) {
+        super(user.getFirstName(), user.getLastName(), user.getEmail(), user.getPassword(), user.getUsername());
+        this.teamId = teamId;
+    }
+
     public void inviteUser(User user) {
     }
 
