@@ -19,7 +19,7 @@ Per fare ciò, abbiamo realizzato il seguente UML:
 # 📊 UML
 
 <img src="image.png" alt="Diagramma UML" width="700"/>
-<br> <br>
+<br>
 
 # 💡 Motivazione per ogni classe scelta
 
