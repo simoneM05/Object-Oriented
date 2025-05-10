@@ -31,8 +31,8 @@ public class Home {
         mainPanel.setBorder(BorderFactory.createEmptyBorder(50, 0, 50, 0));
 
         // Login button action
-        mainPanel.add(controller.buttonChangeFrame("Login", new Singup().getPanel())); // change panel with
-                                                                                       // Login panel
+        mainPanel.add(controller.buttonChangeFrame("Login", new Login().getPanel())); // change panel with
+                                                                                      // Login panel
 
         mainPanel.add(Box.createVerticalStrut(20)); // Space between buttons
 
