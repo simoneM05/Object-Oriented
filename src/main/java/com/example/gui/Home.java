@@ -20,7 +20,7 @@ public class Home {
     }
 
     public Home() {
-        controller = new Controller(); // handle events
+        controller = new Controller(frameHome); // handle events
         mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 
@@ -28,20 +28,21 @@ public class Home {
         mainPanel.setBackground(new Color(245, 245, 245));
 
         // margin
-        mainPanel.setBorder(BorderFactory.createEmptyBorder(100, 0, 50, 0));
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(50, 0, 50, 0));
 
-        String[] fields = { "First Name :", "Last Name :", "Email :", "Username :", "Password :" }; // fields for singup
+        // Login button action
+        mainPanel.add(controller.buttonChangeFrame("Login", new Singup().getPanel())); // change panel with
+                                                                                       // Login panel
 
-        // singup interface
+        mainPanel.add(Box.createVerticalStrut(20)); // Space between buttons
 
-        for (String field : fields) {
-            // textfield
-            mainPanel.add(controller.createTextField(field));
-            mainPanel.add(Box.createVerticalStrut(10)); // space textfield
-        }
+        // Sign Up button action
+        mainPanel.add(controller.buttonChangeFrame("Sign Up", new Singup().getPanel())); // change panel
+                                                                                         // with
+        // Singup panel
+    }
 
-        mainPanel.add(Box.createVerticalStrut(20)); // Space Button
-        mainPanel.add(controller.createButton("Submit"));
-
+    public JPanel getMainPanel() {
+        return mainPanel;
     }
 }
