@@ -1,5 +1,5 @@
 package com.example.model;
-
+import java.util.regex.Matcher;
 public class User {
 
     private String firstName;
@@ -12,8 +12,27 @@ public class User {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.password = password;
-        this.username = username;
+
+
+        if(!isValidUsername(username))
+        {
+                throw new CredenzialiNonValide("Username Non Valido");
+        }
+        else
+        {
+            this.username = username;
+        }
+
+        if(!isValidPassword(password))
+        {
+            throw new CredenzialiNonValide("Password Non Valido");
+        }
+        else
+        {
+            this.password = password;
+        }
+
+
     }
 
     protected String getFirstName() {
@@ -55,5 +74,15 @@ public class User {
     protected void setUsername(String username) {
         this.username = username;
     }
+
+    /* POSSIBILI FUNZIONI PER LA GESTIONE DELLA PASSWORD E PER LO USERNAME
+    public boolean isValidUsername(String username){
+        return username != null && username.matches("come vogliamo gestire il formato??? boooh");
+    }
+
+    public boolean isValidPassword(String password){
+        return password != null && password.length() >= 8 && password.matches("stessa cosa di sopra");
+    }
+     */
 
 }

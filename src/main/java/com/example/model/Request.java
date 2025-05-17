@@ -11,8 +11,32 @@ public class Request {
         this.teamId = teamId; // teamId del partecipante che manda la richiesta
         this.emailRecive = emailRecive; // email di chi riceve la richiesta
     }
-
+    public boolean isStatus() {
+        return status;
+    }
+    public String getMessage() {
+        return message;
+    }
+    public String getTeamId() {
+        return teamId;
+    }
+    public String getEmailRecive() {
+        return emailRecive;
+    }
     public void setStatus(boolean status) {
+
         this.status = status;
     }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+    public void setTeamId(String teamId) {
+        this.teamId = teamId;
+    }
+
+    public void setEmailRecive(String emailRecive) {
+        this.emailRecive = emailRecive;
+    }
+
 }

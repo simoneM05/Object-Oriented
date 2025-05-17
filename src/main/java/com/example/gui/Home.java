@@ -3,6 +3,7 @@ package com.example.gui;
 import com.example.controller.*;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 
 public class Home {
@@ -12,7 +13,7 @@ public class Home {
 
     public static void main(String[] args) {
         frameHome = new JFrame("Home");
-        frameHome.setContentPane(new Home().mainPanel);
+        frameHome.setContentPane(new Home().getMainPanel());
         frameHome.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frameHome.setSize(800, 600);
         frameHome.setLocationRelativeTo(null);
@@ -23,23 +24,52 @@ public class Home {
         controller = new Controller(frameHome); // handle events
         mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-
-        // background color
-        mainPanel.setBackground(new Color(245, 245, 245));
+        mainPanel.setBackground(new Color(0x121212)); // grigio scuro meno nero
+        mainPanel.add(controller.createHeaderPanel(), BorderLayout.NORTH);
 
         // margin
         mainPanel.setBorder(BorderFactory.createEmptyBorder(50, 0, 50, 0));
 
-        // Login button action
-        mainPanel.add(controller.buttonChangeFrame("Login", new Login().getPanel())); // change panel with
-                                                                                      // Login panel
+        // Unico pannello blu arrotondato che contiene entrambi i bottoni
+        JPanel buttonContainer = new RoundedPanel(20, new Color(0, 102, 153)); // blu hackaton
+        buttonContainer.setLayout(new BoxLayout(buttonContainer, BoxLayout.Y_AXIS));
+        buttonContainer.setMaximumSize(new Dimension(350, 180)); // più grande per contenere bottoni + spazio
 
-        mainPanel.add(Box.createVerticalStrut(20)); // Space between buttons
+        // Bottone Login in RoundedPanel
+        RoundedPanel loginRounded = new RoundedPanel(20, new Color(0x00B2FF));
+        loginRounded.setMaximumSize(new Dimension(280, 50));
+        loginRounded.setLayout(new GridBagLayout()); // per centrare bottone
 
-        // Sign Up button action
-        mainPanel.add(controller.buttonChangeFrame("Sign Up", new Singup().getPanel())); // change panel
-                                                                                         // with
-        // Singup panel
+        JButton loginButton = controller.buttonChangeFrame("Login", new Login().getPanel());
+        loginButton.setBackground(new Color(0x00B2FF));
+        loginButton.setForeground(Color.WHITE);
+        loginButton.setFocusPainted(false);
+        loginButton.setPreferredSize(new Dimension(260, 40));
+
+        loginRounded.add(loginButton);
+
+        // Bottone Sign Up in RoundedPanel
+        RoundedPanel signUpRounded = new RoundedPanel(20, new Color(0x00B2FF));
+        signUpRounded.setMaximumSize(new Dimension(280, 50));
+        signUpRounded.setLayout(new GridBagLayout());
+
+        JButton signUpButton = controller.buttonChangeFrame("Sign Up", new Singup().getPanel());
+        signUpButton.setBackground(new Color(0x00B2FF));
+        signUpButton.setForeground(Color.WHITE);
+        signUpButton.setFocusPainted(false);
+        signUpButton.setPreferredSize(new Dimension(260, 40));
+
+        signUpRounded.add(signUpButton);
+
+        // Aggiungi bottoni e spazio verticale tra loro
+        buttonContainer.add(Box.createVerticalStrut(20));
+        buttonContainer.add(loginRounded);
+        buttonContainer.add(Box.createVerticalStrut(25)); // più spazio
+        buttonContainer.add(signUpRounded);
+        buttonContainer.add(Box.createVerticalStrut(20));
+
+        // Aggiungi al pannello principale
+        mainPanel.add(buttonContainer);
     }
 
     public JPanel getMainPanel() {

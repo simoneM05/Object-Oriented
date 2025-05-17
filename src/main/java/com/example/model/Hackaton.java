@@ -16,15 +16,21 @@ public class Hackaton {
 
     public Hackaton(String sede, LocalDate startDate, LocalDate enDate, String title, int partecipantNumber,
             int numMaxForTeam, LocalDate startSub, LocalDate endSub, String problem) {
+
         this.sede = sede;
         this.startDate = startDate;
         this.enDate = enDate;
-        this.title = title;
         this.partecipantNumber = partecipantNumber;
         this.numMaxForTeam = numMaxForTeam;
         this.startSub = startSub;
         this.endSub = endSub;
         this.problem = problem;
+        if(/* INSERIRE CONDIZIONE PER IL TITOLO*/){
+            throw new TitoloNonValido("Questo Hackathon ha un titolo noon valido");
+        }
+        else{
+            this.title = title;
+        }
     }
 
     public String getSede() {

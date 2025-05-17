@@ -18,6 +18,10 @@ public class Team {
         return name;
     }
 
+    public String getId() {
+        return id;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -30,8 +34,5 @@ public class Team {
         // impostas il team id del partecipante
     }
 
-    public String getId() {
-        return id;
-    }
 
 }
