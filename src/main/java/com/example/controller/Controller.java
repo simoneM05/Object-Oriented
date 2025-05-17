@@ -7,12 +7,15 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 import com.example.gui.Home;
+import com.example.gui.RoundedPanel;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
@@ -132,24 +135,48 @@ public class Controller {
 
     }
 
-    public JButton buttonBack() {
+    // Nel Controller o dove hai createHeaderPanel()
+    public JPanel createHeaderPanel() {
+        JPanel headerPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 10)); // vgap ridotto da 25 a 10
+        headerPanel.setOpaque(false);
+        headerPanel.setPreferredSize(new Dimension(800, 100));
+
+        RoundedPanel hackatonPanel = new RoundedPanel(30, new Color(0, 102, 153));
+        hackatonPanel.setPreferredSize(new Dimension(300, 50)); // stessa larghezza del form
+        hackatonPanel.setLayout(new BorderLayout());
+
+        JLabel titleLabel = new JLabel("HACKATON", SwingConstants.CENTER);
+        titleLabel.setForeground(Color.WHITE);
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        hackatonPanel.add(titleLabel, BorderLayout.CENTER);
+
+        headerPanel.add(hackatonPanel);
+        return headerPanel;
+    }
+
+    public JPanel buttonBack() {
         JButton button = new JButton("Back");
-        button.setMaximumSize(new Dimension(50, 40)); // max size for botton
-        // Coloro
-        button.setBackground(new Color(70, 130, 180)); // background color
-        button.setForeground(Color.WHITE); // text color
-        // Border
-        button.setBorder(new EmptyBorder(10, 25, 10, 25));
-        button.setBorderPainted(false);
-        button.setFocusPainted(false); // remove bottom border for text
-        // Action
+        button.setPreferredSize(new Dimension(80, 40));
+        button.setForeground(Color.WHITE);
+        button.setFocusPainted(false);
+        button.setBorder(BorderFactory.createEmptyBorder(5, 15, 5, 15)); // padding interno testo
+
+        // Rendi il bottone trasparente così si vede il rounded panel dietro
+        button.setContentAreaFilled(false);
+        button.setOpaque(false);
+
+        // Crea un RoundedPanel come contenitore del bottone
+        RoundedPanel roundedPanel = new RoundedPanel(20, new Color(70, 130, 180));
+        roundedPanel.setLayout(new GridBagLayout()); // per centrare il bottone dentro il pannello
+        roundedPanel.add(button);
+
+        // Azione del bottone
         button.addActionListener(e -> {
             changePanel(new Home().getMainPanel());
             main = !main;
-        }); // add action for botton
+        });
 
-        return button;
-
+        return roundedPanel;
     }
 
     void topPanel(JPanel panel) {
