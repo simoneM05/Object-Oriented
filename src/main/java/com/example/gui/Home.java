@@ -3,7 +3,6 @@ package com.example.gui;
 import com.example.controller.*;
 
 import javax.swing.*;
-import javax.swing.border.LineBorder;
 import java.awt.*;
 
 public class Home {
@@ -53,7 +52,7 @@ public class Home {
         signUpRounded.setMaximumSize(new Dimension(280, 50));
         signUpRounded.setLayout(new GridBagLayout());
 
-        JButton signUpButton = controller.buttonChangeFrame("Sign Up", new Singup().getPanel());
+        JButton signUpButton = controller.buttonChangeFrame("Sign Up", new Registration().getPanel());
         signUpButton.setBackground(new Color(0x00B2FF));
         signUpButton.setForeground(Color.WHITE);
         signUpButton.setFocusPainted(false);

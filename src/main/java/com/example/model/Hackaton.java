@@ -25,12 +25,12 @@ public class Hackaton {
         this.startSub = startSub;
         this.endSub = endSub;
         this.problem = problem;
-        if(/* INSERIRE CONDIZIONE PER IL TITOLO*/){
-            throw new TitoloNonValido("Questo Hackathon ha un titolo noon valido");
-        }
-        else{
-            this.title = title;
-        }
+        // if(/* INSERIRE CONDIZIONE PER IL TITOLO*/){
+        // throw new TitoloNonValido("Questo Hackathon ha un titolo noon valido");
+        // }
+        // else{
+        // this.title = title;
+        // }
     }
 
     public String getSede() {
