@@ -1,7 +1,5 @@
 package com.example;
 
-import javax.swing.SwingUtilities;
-
 import com.example.gui.Home;
 
 public class Main {

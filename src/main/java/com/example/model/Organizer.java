@@ -5,7 +5,7 @@ public class Organizer extends User {
     private String hackatonTitle; // hackaton a cui fa parte
 
     public Organizer(String firstName, String lastName, String email, Hackaton hackaton, String password,
-            String username) {
+            String username) /* throws CredenzialiNonValide */ {
         super(firstName, lastName, email, password, username);
         this.hackatonTitle = hackaton.getTitle();
     }
