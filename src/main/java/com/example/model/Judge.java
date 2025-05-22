@@ -2,9 +2,9 @@ package com.example.model;
 
 public class Judge extends User {
 
-    private String hackatonTitle; // hackaton a cui fa parte
+    private String hackatonTitle; // used for found hackaton but in database saved with HackatonId
 
-    public Judge(String firstName, String lastName, String email, String password, Hackaton hackaton){
+    public Judge(String firstName, String lastName, String email, String password, Hackaton hackaton) {
         super(firstName, lastName, email, password, lastName);
         this.hackatonTitle = hackaton.getTitle();
     }

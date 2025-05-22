@@ -1,77 +1,65 @@
 package com.example.gui;
 
-import com.example.controller.*;
+import com.example.controller.Controller;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class Home {
-    private JPanel mainPanel;
+    private JPanel mainPanel; // Questo pannello conterrà il CardLayout
     private static JFrame frameHome;
     private Controller controller;
 
+    public static final String LOGIN_PANEL = "LoginPanel";
+    public static final String REGISTRATION_PANEL = "RegistrationPanel";
+    public static final String HOME_PANEL = "HomePage"; // QUESTA È LA COSTANTE CHE IL CONTROLLER CERCA
+
     public static void main(String[] args) {
-        frameHome = new JFrame("Home");
-        frameHome.setContentPane(new Home().getMainPanel());
-        frameHome.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frameHome.setSize(800, 600);
-        frameHome.setLocationRelativeTo(null);
-        frameHome.setVisible(true);
+        SwingUtilities.invokeLater(() -> {
+            frameHome = new JFrame("Applicazione Utenti");
+            Home homeInstance = new Home();
+            frameHome.setContentPane(homeInstance.getMainPanel());
+            frameHome.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frameHome.setSize(900, 700); // Aumentato leggermente le dimensioni per la homepage
+            frameHome.setLocationRelativeTo(null); // Centra la finestra
+            frameHome.setVisible(true);
+
+            // Inizialmente mostra il pannello di login
+            ((CardLayout) homeInstance.mainPanel.getLayout()).show(homeInstance.mainPanel, LOGIN_PANEL);
+        });
     }
 
     public Home() {
-        controller = new Controller(frameHome); // handle events
-        mainPanel = new JPanel();
-        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-        mainPanel.setBackground(new Color(0x121212)); // grigio scuro meno nero
-        mainPanel.add(controller.createHeaderPanel(), BorderLayout.NORTH);
+        controller = new Controller(this); // Passa l'istanza di Home al controller
+        initializeUI();
+    }
 
-        // margin
-        mainPanel.setBorder(BorderFactory.createEmptyBorder(50, 0, 50, 0));
+    private void initializeUI() {
+        mainPanel = new JPanel(new CardLayout()); // Usa CardLayout per cambiare pannelli
 
-        // Unico pannello blu arrotondato che contiene entrambi i bottoni
-        JPanel buttonContainer = new RoundedPanel(20, new Color(0, 102, 153)); // blu hackaton
-        buttonContainer.setLayout(new BoxLayout(buttonContainer, BoxLayout.Y_AXIS));
-        buttonContainer.setMaximumSize(new Dimension(350, 180)); // più grande per contenere bottoni + spazio
+        // Crea istanze dei tuoi pannelli
+        LoginPanel loginPanel = new LoginPanel(controller);
+        RegistrationPanel registrationPanel = new RegistrationPanel(controller);
+        HomePage homePage = new HomePage(controller); // Nuova istanza della homepage
 
-        // Bottone Login in RoundedPanel
-        RoundedPanel loginRounded = new RoundedPanel(20, new Color(0x00B2FF));
-        loginRounded.setMaximumSize(new Dimension(280, 50));
-        loginRounded.setLayout(new GridBagLayout()); // per centrare bottone
-
-        JButton loginButton = controller.buttonChangeFrame("Login", new Login().getPanel());
-        loginButton.setBackground(new Color(0x00B2FF));
-        loginButton.setForeground(Color.WHITE);
-        loginButton.setFocusPainted(false);
-        loginButton.setPreferredSize(new Dimension(260, 40));
-
-        loginRounded.add(loginButton);
-
-        // Bottone Sign Up in RoundedPanel
-        RoundedPanel signUpRounded = new RoundedPanel(20, new Color(0x00B2FF));
-        signUpRounded.setMaximumSize(new Dimension(280, 50));
-        signUpRounded.setLayout(new GridBagLayout());
-
-        JButton signUpButton = controller.buttonChangeFrame("Sign Up", new Registration().getPanel());
-        signUpButton.setBackground(new Color(0x00B2FF));
-        signUpButton.setForeground(Color.WHITE);
-        signUpButton.setFocusPainted(false);
-        signUpButton.setPreferredSize(new Dimension(260, 40));
-
-        signUpRounded.add(signUpButton);
-
-        // Aggiungi bottoni e spazio verticale tra loro
-        buttonContainer.add(Box.createVerticalStrut(20));
-        buttonContainer.add(loginRounded);
-        buttonContainer.add(Box.createVerticalStrut(25)); // più spazio
-        buttonContainer.add(signUpRounded);
-        buttonContainer.add(Box.createVerticalStrut(20));
-
-        // Aggiungi al pannello principale
-        mainPanel.add(buttonContainer);
+        // Aggiungi i pannelli al mainPanel con nomi unici per CardLayout
+        mainPanel.add(loginPanel, LOGIN_PANEL);
+        mainPanel.add(registrationPanel, REGISTRATION_PANEL);
+        mainPanel.add(homePage, HOME_PANEL); // Aggiungi la homepage
     }
 
     public JPanel getMainPanel() {
         return mainPanel;
+    }
+
+    /**
+     * Metodo per passare tra i diversi pannelli usando CardLayout.
+     * 
+     * @param panelName Il nome del pannello da mostrare (es. LOGIN_PANEL,
+     *                  REGISTRATION_PANEL, HOME_PANEL).
+     */
+    public void showPanel(String panelName) {
+        CardLayout cl = (CardLayout) (mainPanel.getLayout());
+        cl.show(mainPanel, panelName);
     }
 }
