@@ -4,7 +4,7 @@ public class Participant extends User {
 
     private Team team;
 
-    private String titleHackaton;
+    private String titleHackaton; // used for found hackaton but in database saved with HackatonId
 
     public String getTeamId() {
         return team.getId();
