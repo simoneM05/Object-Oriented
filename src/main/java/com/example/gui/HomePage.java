@@ -84,7 +84,7 @@ public class HomePage extends JPanel {
         JScrollPane hackathonsScrollPane = new JScrollPane(hackathonsPanel);
         hackathonsScrollPane.setBorder(BorderFactory.createEmptyBorder());
         hackathonsScrollPane.getVerticalScrollBar().setUnitIncrement(16);
-        tabbedPane.addTab("I miei Hackathon", hackathonsScrollPane);
+        tabbedPane.addTab("Hackathon List", hackathonsScrollPane);
 
         // --- Tab 2: Hackathon Iscritto (NUOVA SEZIONE) ---
         JPanel subscribedHackathonsContainer = new JPanel(new BorderLayout());
@@ -103,11 +103,6 @@ public class HomePage extends JPanel {
         subscribedHackathonsScrollPane.setBorder(BorderFactory.createEmptyBorder());
         subscribedHackathonsScrollPane.getVerticalScrollBar().setUnitIncrement(16);
         subscribedHackathonsContainer.add(subscribedHackathonsScrollPane, BorderLayout.CENTER);
-
-        // Simula gli hackathon a cui l'utente è iscritto
-        displayFictitiousSubscribedHackathons();
-
-        tabbedPane.addTab("Hackathon Iscritto", subscribedHackathonsContainer);
 
         // --- Tab 3: I miei Inviti ---
         JPanel invitationsPanel = new JPanel(new BorderLayout());
@@ -257,68 +252,6 @@ public class HomePage extends JPanel {
 
         parentPanel.add(card);
         parentPanel.add(Box.createRigidArea(new Dimension(0, 15))); // Space between cards
-    }
-
-    /**
-     * Simula la visualizzazione di hackathon a cui l'utente è iscritto.
-     */
-    private void displayFictitiousSubscribedHackathons() {
-        subscribedHackathonsPanel.removeAll(); // Clear previous content
-
-        List<String[]> fictitiousSubscribed = new ArrayList<>();
-        fictitiousSubscribed.add(new String[] { "Hackathon AI Futuristico", "15-17 Luglio 2024",
-                "Un evento di 72 ore per esplorare le ultime frontiere dell'intelligenza artificiale." });
-        fictitiousSubscribed.add(new String[] { "CyberSecurity Summit", "01-03 Agosto 2024",
-                "Impara le migliori pratiche di sicurezza informatica e difendi i sistemi." });
-
-        if (fictitiousSubscribed.isEmpty()) {
-            JLabel noSubscribedLabel = new JLabel("Non sei iscritto a nessun hackathon al momento.");
-            noSubscribedLabel.setFont(new Font("Segoe UI", Font.ITALIC, 16));
-            noSubscribedLabel.setForeground(new Color(120, 120, 120));
-            subscribedHackathonsPanel.add(noSubscribedLabel);
-        } else {
-            for (String[] hackathon : fictitiousSubscribed) {
-                // Reuse addHackathonCardWithSubscribe's internal logic for display, but without
-                // the button
-                JPanel card = new JPanel();
-                card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
-                card.setBackground(Color.WHITE);
-                card.setBorder(BorderFactory.createCompoundBorder(
-                        new LineBorder(new Color(200, 200, 200), 1),
-                        new EmptyBorder(15, 20, 15, 20)));
-                card.setAlignmentX(Component.CENTER_ALIGNMENT);
-                card.setMaximumSize(new Dimension(700, Short.MAX_VALUE));
-
-                JLabel nameLabel = new JLabel(hackathon[0]);
-                nameLabel.setFont(new Font("Segoe UI", Font.BOLD, 22));
-                nameLabel.setForeground(new Color(60, 60, 60));
-                nameLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
-                card.add(nameLabel);
-                card.add(Box.createRigidArea(new Dimension(0, 5)));
-
-                JLabel dateLabel = new JLabel(hackathon[1]);
-                dateLabel.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-                dateLabel.setForeground(new Color(100, 100, 100));
-                dateLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
-                card.add(dateLabel);
-                card.add(Box.createRigidArea(new Dimension(0, 10)));
-
-                JTextArea descriptionArea = new JTextArea(hackathon[2]);
-                descriptionArea.setFont(new Font("Segoe UI", Font.PLAIN, 15));
-                descriptionArea.setForeground(new Color(80, 80, 80));
-                descriptionArea.setLineWrap(true);
-                descriptionArea.setWrapStyleWord(true);
-                descriptionArea.setEditable(false);
-                descriptionArea.setBackground(Color.WHITE);
-                descriptionArea.setAlignmentX(Component.LEFT_ALIGNMENT);
-                card.add(descriptionArea);
-
-                subscribedHackathonsPanel.add(card);
-                subscribedHackathonsPanel.add(Box.createRigidArea(new Dimension(0, 15)));
-            }
-        }
-        subscribedHackathonsPanel.revalidate();
-        subscribedHackathonsPanel.repaint();
     }
 
     /**
