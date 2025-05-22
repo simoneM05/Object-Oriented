@@ -11,10 +11,10 @@ public class Participant extends User {
     }
 
     public Participant(String firstName, String lastName, String email, String password, String username,
-            Team team, Hackaton hackaton) {
+            Team team, Hackathon hackathon) {
         super(firstName, lastName, email, password, username);
         this.team = team;
-        this.titleHackaton = hackaton.getTitle();
+        this.titleHackaton = hackathon.getTitle();
     }
 
     public Participant(User user, Team team) {
