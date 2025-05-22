@@ -88,4 +88,6 @@ public class User {
      * }
      */
 
+    // TODO = funzione per registrarsi alla piattaforma
+
 }
