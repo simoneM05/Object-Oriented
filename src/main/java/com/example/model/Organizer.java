@@ -12,6 +12,8 @@ public class Organizer extends User {
             String username) /* throws CredenzialiNonValide */ {
         super(firstName, lastName, email, password, username);
         this.hackatonTitle = hackathon.getTitle();
+        this.hackathonTitle = hackathon.getTitle();
+        this.registrationStatus = registrationStatus;
     }
 
     public void sendMailInvite(User user) {

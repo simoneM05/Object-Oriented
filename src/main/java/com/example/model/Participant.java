@@ -4,7 +4,7 @@ public class Participant extends User {
 
     private Team team;
 
-    private String titleHackaton; // used for found hackaton but in database saved with HackatonId
+    private String hackathonTitle; // used for found hackathon but in database saved with HackatonId
 
     public String getTeamId() {
         return team.getId();
@@ -14,7 +14,7 @@ public class Participant extends User {
             Team team, Hackathon hackathon) {
         super(firstName, lastName, email, password, username);
         this.team = team;
-        this.titleHackaton = hackathon.getTitle();
+        this.hackathonTitle = hackathon.getTitle();
     }
 
     public Participant(User user, Team team) {
