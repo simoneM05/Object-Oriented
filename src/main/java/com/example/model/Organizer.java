@@ -2,12 +2,14 @@ package com.example.model;
 
 public class Organizer extends User {
 
-    private String hackatonTitle; // hackaton a cui fa parte
-    private boolean registrationStatus; // attributo per capire se le registrazione sono aperte o meno
+    private String hackathonTitle; // hackaton a cui fa parte
+    private boolean registrationStatus;// attributo per capire se le registrazione sono aperte o meno
+
+
     public Organizer(String firstName, String lastName, String email, Hackathon hackathon, String password,
                      String username, boolean registrationStatus) /* throws CredenzialiNonValide */ {
         super(firstName, lastName, email, password, username);
-        this.hackatonTitle = hackathon.getTitle();
+        this.hackathonTitle = hackathon.getTitle();
         this.registrationStatus = registrationStatus;
     }
 
