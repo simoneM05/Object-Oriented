@@ -11,7 +11,7 @@ public class Hackathon {
     private int partecipantNumber; // numero di partecipanti totali
     private int numMaxForTeam; // numero massimo per ogni team
     private LocalDate startSub; // inizio iscrizioni
-    private LocalDate endSub; // fine iscrizioni
+    private final LocalDate endSub = startDate.minusDays(2); // fine iscrizioni 2 giorni prima del inzio
     private String problem; // descrizione problema
 
     //da come abbiamo fatto l'UML, l'Hackathon è formato da un insieme di Team che si sfidano
@@ -24,8 +24,10 @@ public class Hackathon {
 
     //TODO = LEGGENDO MEGLIO LA TRACCIA, HACKATHON DEVE AVERE UN ISTANZA DI GIUDICE
 
+
     public Hackathon(String sede, LocalDate startDate, LocalDate endDate, String title, int partecipantNumber,
                      int numMaxForTeam, LocalDate startSub, LocalDate endSub, String problem) {
+
 
         this.sede = sede;
         this.startDate = startDate;
@@ -33,7 +35,6 @@ public class Hackathon {
         this.partecipantNumber = partecipantNumber;
         this.numMaxForTeam = numMaxForTeam;
         this.startSub = startSub;
-        this.endSub = endSub;
         this.problem = problem;
         teamPartecipanti = new ArrayList<>();
         user = new ArrayList<>();
@@ -99,14 +100,6 @@ public class Hackathon {
 
     public void setStartSub(LocalDate startSub) {
         this.startSub = startSub;
-    }
-
-    public LocalDate getEndSub() {
-        return endSub;
-    }
-
-    public void setEndSub(LocalDate endSub) {
-        this.endSub = endSub;
     }
 
     public String getProblem() {
