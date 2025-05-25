@@ -4,14 +4,15 @@ import java.time.LocalDate;
 
 public class Organizer extends User {
 
-    private String hackatonTitle; // hackaton a cui fa parte
+
+    private String hackathonTitle; // hackaton a cui fa parte
     private LocalDate registrationStatus; // attributo per capire se le registrazione sono aperte o meno
     private final String role = Role.Organizer.toString();
 
     public Organizer(String firstName, String lastName, String email, Hackathon hackathon, String password,
             String username) /* throws CredenzialiNonValide */ {
         super(firstName, lastName, email, password, username);
-        this.hackatonTitle = hackathon.getTitle();
+        this.hackathonTitle = hackathon.getTitle();
     }
 
     public void sendMailInvite(User user) {

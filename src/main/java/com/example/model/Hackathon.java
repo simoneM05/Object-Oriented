@@ -6,7 +6,7 @@ public class Hackathon {
 
     private String sede;
     private LocalDate startDate;
-    private LocalDate enDate;
+    private LocalDate endDate;
     private String title;
     private int partecipantNumber; // numero di partecipanti totali
     private int numMaxForTeam; // numero massimo per ogni team
@@ -16,12 +16,14 @@ public class Hackathon {
 
     // TODO = LEGGENDO MEGLIO LA TRACCIA, HACKATHON DEVE AVERE UN ISTANZA DI GIUDICE
 
-    public Hackathon(String sede, LocalDate startDate, LocalDate enDate, String title, int partecipantNumber,
-            int numMaxForTeam, LocalDate startSub, String problem) {
+
+    public Hackathon(String sede, LocalDate startDate, LocalDate endDate, String title, int partecipantNumber,
+                     int numMaxForTeam, LocalDate startSub, LocalDate endSub, String problem) {
+
 
         this.sede = sede;
         this.startDate = startDate;
-        this.enDate = enDate;
+        this.endDate = endDate;
         this.partecipantNumber = partecipantNumber;
         this.numMaxForTeam = numMaxForTeam;
         this.startSub = startSub;
@@ -50,12 +52,12 @@ public class Hackathon {
         this.startDate = startDate;
     }
 
-    public LocalDate getEnDate() {
-        return enDate;
+    public LocalDate getEndDate() {
+        return endDate;
     }
 
-    public void setEnDate(LocalDate enDate) {
-        this.enDate = enDate;
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
     }
 
     public String getTitle() {
