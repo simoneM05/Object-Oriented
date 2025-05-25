@@ -1,5 +1,5 @@
 package com.example.model;
-
+import java.util.ArrayList;
 import java.time.LocalDate;
 
 public class Hackathon {
@@ -14,7 +14,15 @@ public class Hackathon {
     private final LocalDate endSub = startDate.minusDays(2); // fine iscrizioni 2 giorni prima del inzio
     private String problem; // descrizione problema
 
-    // TODO = LEGGENDO MEGLIO LA TRACCIA, HACKATHON DEVE AVERE UN ISTANZA DI GIUDICE
+    //da come abbiamo fatto l'UML, l'Hackathon è formato da un insieme di Team che si sfidano
+    //Al momento creun un arrayList di Team
+    private ArrayList<Team> teamPartecipanti;
+
+
+    //sempre per restare coerenti con l'UML e le cardinalità che abbiamo scritto, avere al momento un ArrayList di utente è comodo
+    private ArrayList<User> user;
+
+    //TODO = LEGGENDO MEGLIO LA TRACCIA, HACKATHON DEVE AVERE UN ISTANZA DI GIUDICE
 
 
     public Hackathon(String sede, LocalDate startDate, LocalDate endDate, String title, int partecipantNumber,
@@ -28,6 +36,8 @@ public class Hackathon {
         this.numMaxForTeam = numMaxForTeam;
         this.startSub = startSub;
         this.problem = problem;
+        teamPartecipanti = new ArrayList<>();
+        user = new ArrayList<>();
         // if(/* INSERIRE CONDIZIONE PER IL TITOLO*/){
         // throw new TitoloNonValido("Questo Hackathon ha un titolo noon valido");
         // }
