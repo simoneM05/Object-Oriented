@@ -3,8 +3,9 @@ package com.example.model;
 public class Judge extends User {
 
     private String hackatonTitle; // hackaton a cui fa parte
+    private final String role = Role.Judge.toString();
 
-    public Judge(String firstName, String lastName, String email, String password, Hackathon hackathon){
+    public Judge(String firstName, String lastName, String email, String password, Hackathon hackathon) {
         super(firstName, lastName, email, password, lastName);
         this.hackatonTitle = hackathon.getTitle();
     }

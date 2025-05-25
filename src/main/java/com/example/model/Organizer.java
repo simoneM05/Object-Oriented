@@ -1,33 +1,30 @@
 package com.example.model;
 
+import java.time.LocalDate;
+
 public class Organizer extends User {
 
     private String hackatonTitle; // hackaton a cui fa parte
-    private boolean registrationStatus; // attributo per capire se le registrazione sono aperte o meno
+    private LocalDate registrationStatus; // attributo per capire se le registrazione sono aperte o meno
+    private final String role = Role.Organizer.toString();
 
     public Organizer(String firstName, String lastName, String email, Hackathon hackathon, String password,
-            String username, boolean registrationStatus) /* throws CredenzialiNonValide */ {
+            String username) /* throws CredenzialiNonValide */ {
         super(firstName, lastName, email, password, username);
         this.hackatonTitle = hackathon.getTitle();
-        this.registrationStatus = registrationStatus;
     }
 
     public void sendMailInvite(User user) {
-        // todo: puo essere fatto solo a chi fa parte di quel hackaton
+        // todo: puo essere fatto solo a chi fa parte di quel hackaton (per crearea un
+        // giudice)
     }
-    ///
-    // public void chooseJugde(//la mia intenzione è quella di creare un arraylist
-    /// di persone, su cui fare un foreach usando instanceof)
-    // {
-    //
-    // }
 
-    public void RegistrationStatus(boolean registrationStatus) {
-        this.registrationStatus = registrationStatus;
+    public void setRegistrationStart(LocalDate registrationStatus) {
+        // ricerca del hackaton per il titolo e set del giorno di
     }
 
     public boolean isRegistrationAvaible(boolean registrationStatus) {
-        if (registrationStatus == true) {c
+        if (registrationStatus == true) {
             System.out.println("Registration is available.");
             return true;
         } else {
