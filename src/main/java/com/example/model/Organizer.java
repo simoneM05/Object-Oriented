@@ -6,7 +6,7 @@ public class Organizer extends User {
 
 
     private String hackathonTitle; // hackaton a cui fa parte
-    private LocalDate registrationStatus; // attributo per capire se le registrazione sono aperte o meno
+    private LocalDate registrationStatus; // attributo per capire se le registrazione sono aperte o meno impostando una data di inizio  
     private final String role = Role.Organizer.toString();
 
     public Organizer(String firstName, String lastName, String email, Hackathon hackathon, String password,
@@ -20,7 +20,7 @@ public class Organizer extends User {
         // giudice)
     }
 
-    public void setRegistrationStart(LocalDate registrationStatus) {
+    public void setRegistrationStart(LocalDate registrationStatus) { 
         // ricerca del hackaton per il titolo e set del giorno di
     }
 
