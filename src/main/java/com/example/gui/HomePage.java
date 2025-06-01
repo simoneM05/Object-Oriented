@@ -71,7 +71,7 @@ public class HomePage extends JPanel {
         hackathonsPanel.setBackground(new Color(240, 240, 240));
         hackathonsPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
 
-        // Aggiungi hackathon fittizi con pulsante Iscriviti
+        // Aggiungi hackathon fittizi con pulsante per testing
         addHackathonCardWithSubscribe(hackathonsPanel, "Hackathon Innovazione Digitale", "20-22 Settembre 2024",
                 "Un evento di 48 ore per sviluppare soluzioni innovative nel campo della trasformazione digitale. Focus su AI e Blockchain.");
         addHackathonCardWithSubscribe(hackathonsPanel, "GreenTech Challenge", "10-12 Ottobre 2024",
