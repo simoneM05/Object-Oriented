@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="e3b887fa-b90a-497e-819d-58f129aa10db" name="Changes" comment="Migliorata la coerenza dei nomi" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="Simone &lt;simonemartino05@gmail.com&gt;" />
+      </list>
+    </option>
+    <option name="PUSH_AUTO_UPDATE" value="true" />
+    <option name="PUSH_TAGS">
+      <GitPushTagMode>
+        <option name="argument" value="--follow-tags" />
+        <option name="title" value="Current Branch" />
+      </GitPushTagMode>
+    </option>
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="dev" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {}
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/simoneM05/Object-Oriented.git&quot;,
+    &quot;accountId&quot;: &quot;fb71f39c-f9ea-4df5-8b4c-3acf37aa5d0f&quot;
+  },
+  &quot;recentNewPullRequestHead&quot;: {
+    &quot;server&quot;: {
+      &quot;useHttp&quot;: false,
+      &quot;host&quot;: &quot;github.com&quot;,
+      &quot;port&quot;: null,
+      &quot;suffix&quot;: null
+    },
+    &quot;owner&quot;: &quot;simoneM05&quot;,
+    &quot;repository&quot;: &quot;Object-Oriented&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
+  <component name="ProjectId" id="2wursIyxo245k1tmbwGB1NWDzOP" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Home.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;true&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;modificheDio&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Franc/OneDrive/Desktop/Studio/UNIVERSITA'/OO/SIlentHill2&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;settings.sync&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-a94e463ab2e7-intellij.indexing.shared.core-IU-243.26053.27" />
+        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-IU-243.26053.27" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e3b887fa-b90a-497e-819d-58f129aa10db" name="Changes" comment="" />
+      <created>1746902504364</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1746902504364</updated>
+      <workItem from="1746902505952" duration="569000" />
+      <workItem from="1746954797184" duration="1420000" />
+      <workItem from="1747063263523" duration="8000" />
+      <workItem from="1747645246041" duration="66000" />
+      <workItem from="1747655899106" duration="658000" />
+      <workItem from="1747656688160" duration="2927000" />
+      <workItem from="1747659883861" duration="185000" />
+      <workItem from="1747660079191" duration="1000" />
+      <workItem from="1747661360838" duration="31000" />
+      <workItem from="1747727036378" duration="905000" />
+      <workItem from="1747896697111" duration="525000" />
+      <workItem from="1747897238297" duration="1915000" />
+      <workItem from="1747899867966" duration="58000" />
+      <workItem from="1747905074088" duration="222000" />
+      <workItem from="1747905925722" duration="1347000" />
+      <workItem from="1747908003121" duration="4000" />
+      <workItem from="1747916821414" duration="97000" />
+      <workItem from="1747916988283" duration="419000" />
+      <workItem from="1747919881911" duration="252000" />
+      <workItem from="1747920173352" duration="99000" />
+      <workItem from="1748087302796" duration="154000" />
+      <workItem from="1748087555463" duration="231000" />
+      <workItem from="1748088323013" duration="9000" />
+      <workItem from="1748088478089" duration="33000" />
+      <workItem from="1748089972953" duration="2572000" />
+      <workItem from="1748095950504" duration="28000" />
+      <workItem from="1748164979564" duration="284000" />
+      <workItem from="1748167114495" duration="297000" />
+    </task>
+    <task id="LOCAL-00001" summary="Aggiunta di controllo di eccezioni, eccezioni personalizzate e regex per la password e per il nome utente">
+      <option name="closed" value="true" />
+      <created>1747659996811</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1747659996811</updated>
+    </task>
+    <task id="LOCAL-00002" summary="aggiunti diversi TODO ad alcune classi, in seguito ad una rilettura della traccia">
+      <option name="closed" value="true" />
+      <created>1747907221913</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1747907221913</updated>
+    </task>
+    <task id="LOCAL-00003" summary="aggiunti diversi TODO ad alcune classi, in seguito ad una rilettura della traccia">
+      <option name="closed" value="true" />
+      <created>1747916836246</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1747916836246</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Migliorata la coerenza dei nomi">
+      <option name="closed" value="true" />
+      <created>1748092538237</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1748092538237</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="origin/dev" />
+                </option>
+              </RecentGroup>
+            </list>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/dev" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="create RoundedPanel, Login page created, Home page created" />
+    <MESSAGE value="Aggiunta di controllo di eccezioni, eccezioni personalizzate e regex per la password e per il nome utente" />
+    <MESSAGE value="Merge remote-tracking branch 'origin/dev' into dev&#10;&#10;# Conflicts:&#10;#&#9;src/main/java/com/example/model/Hackathon.java&#10;#&#9;src/main/java/com/example/model/Judge.java" />
+    <MESSAGE value="aggiunti diversi TODO ad alcune classi, in seguito ad una rilettura della traccia" />
+    <MESSAGE value="Migliorata la coerenza dei nomi" />
+    <option name="LAST_COMMIT_MESSAGE" value="Migliorata la coerenza dei nomi" />
+  </component>
+</project>
