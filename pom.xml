@@ -13,7 +13,7 @@
         <maven.compiler.target>17</maven.compiler.target>
     </properties>
 
-     <!--! DA RIMUOVERE ALLA CONSEGNA-->
+     <!--! PER ESECUZIONE SU VS CODE-->
     <build>
     <plugins>
         <plugin>
