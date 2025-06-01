@@ -9,7 +9,7 @@ public class User {
     private String email;
     private String password;
     private String username;
-    private final String role = Role.User.toString();
+    private String role = Role.User.toString();
 
     protected User(String firstName, String lastName, String email, String password, String username) {
         this.firstName = firstName;
@@ -74,6 +74,14 @@ public class User {
 
     protected void setUsername(String username) {
         this.username = username;
+    }
+
+    protected String getRole() {
+        return role;
+    }
+
+    protected void setRole(String role) {
+        this.role = role;
     }
 
     /*

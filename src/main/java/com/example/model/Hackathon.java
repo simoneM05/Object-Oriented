@@ -6,7 +6,7 @@ public class Hackathon {
 
     private String sede;
     private LocalDate startDate;
-    private LocalDate enDate;
+    private LocalDate endDate;
     private String title;
     private int partecipantNumber; // numero di partecipanti totali
     private int numMaxForTeam; // numero massimo per ogni team
@@ -14,17 +14,16 @@ public class Hackathon {
     private final LocalDate endSub = startDate.minusDays(2); // fine iscrizioni 2 giorni prima del inzio
     private String problem; // descrizione problema
 
-    //TODO = LEGGENDO MEGLIO LA TRACCIA, HACKATHON DEVE AVERE UN ISTANZA DI GIUDICE
+    // ODO = LEGGENDO MEGLIO LA TRACCIA, HACKATHON DEVE AVERE UN ISTANZA DI GIUDICE
 
     public Hackathon(String sede, LocalDate startDate, LocalDate enDate, String title, int partecipantNumber,
-                     int numMaxForTeam, LocalDate startSub, LocalDate endSub, String problem) {
+            int numMaxForTeam, String problem) {
 
         this.sede = sede;
         this.startDate = startDate;
-        this.enDate = enDate;
+        this.endDate = enDate;
         this.partecipantNumber = partecipantNumber;
         this.numMaxForTeam = numMaxForTeam;
-        this.startSub = startSub;
         this.problem = problem;
         // if(/* INSERIRE CONDIZIONE PER IL TITOLO*/){
         // throw new TitoloNonValido("Questo Hackathon ha un titolo noon valido");
@@ -50,12 +49,12 @@ public class Hackathon {
         this.startDate = startDate;
     }
 
-    public LocalDate getEnDate() {
-        return enDate;
+    public LocalDate getEndDate() {
+        return endDate;
     }
 
-    public void setEnDate(LocalDate enDate) {
-        this.enDate = enDate;
+    public void setEndDate(LocalDate enDate) {
+        this.endDate = enDate;
     }
 
     public String getTitle() {
@@ -88,6 +87,10 @@ public class Hackathon {
 
     public void setStartSub(LocalDate startSub) {
         this.startSub = startSub;
+    }
+
+    public LocalDate getEndSub() {
+        return endSub;
     }
 
     public String getProblem() {

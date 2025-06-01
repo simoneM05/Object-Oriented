@@ -4,25 +4,24 @@ import java.time.LocalDate;
 
 public class Organizer extends User {
 
-    private String hackatonTitle; // hackaton a cui fa parte
-    private LocalDate registrationStatus; // attributo per capire se le registrazione sono aperte o meno
-    private final String role = Role.Organizer.toString();
+    private String hackathonTitle; // hackaton a cui fa parte
 
     public Organizer(String firstName, String lastName, String email, Hackathon hackathon, String password,
             String username) /* throws CredenzialiNonValide */ {
         super(firstName, lastName, email, password, username);
-        this.hackatonTitle = hackathon.getTitle();
+        this.setRole(Role.Organizer.toString());
         this.hackathonTitle = hackathon.getTitle();
-        this.registrationStatus = registrationStatus;
+
     }
 
     public void sendMailInvite(User user) {
-        // todo: puo essere fatto solo a chi fa parte di quel hackaton (per crearea un
-        // giudice)
+        for (int i = 0; i < 3; i++) {
+            // query
+        }
     }
 
     public void setRegistrationStart(LocalDate registrationStatus) {
-        // ricerca del hackaton per il titolo e set del giorno di
+        // QUERY che trova l'hachaton a di riferimento e imposta in start sub una data
     }
 
     public boolean isRegistrationAvaible(boolean registrationStatus) {
