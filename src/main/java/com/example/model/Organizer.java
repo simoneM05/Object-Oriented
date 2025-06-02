@@ -7,10 +7,12 @@ public class Organizer extends User {
 
 
     public Organizer(String firstName, String lastName, String email, Hackathon hackathon, String password,
-                     String username, boolean registrationStatus) /* throws CredenzialiNonValide */ {
-        super(firstName, lastName, email, password, username);
+                     String username, boolean registrationStatus, int userId) /* throws CredenzialiNonValide */ {
+        super(firstName, lastName, email, password, username, userId);
         this.hackathonTitle = hackathon.getTitle();
         this.registrationStatus = registrationStatus;
+
+
     }
 
     public void sendMailInvite(User user) {

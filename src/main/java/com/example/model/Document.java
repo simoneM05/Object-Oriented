@@ -4,13 +4,17 @@ import java.time.LocalDate;
 
 public class Document {
     private LocalDate date;
-    private String document;
-    private String teamId;
 
-    public Document(LocalDate date, String document, String teamId) {
+    //l'ho chiamato cosi' giusto per differenziarlo rispetto al nome della classe
+    private String documentFile;
+    private int teamId;
+    private int documentId;
+
+    public Document(LocalDate date, String document, int teamId, int documentId) {
         this.date = date;
-        this.document = document;
+        this.documentFile = document;
         this.teamId = teamId;
+        this.documentId = documentId;
     }
 
     public void setDate(LocalDate date) {
@@ -18,15 +22,24 @@ public class Document {
     }
 
     public void setDocument(String document) {
-        this.document = document;
+        this.documentFile = document;
     }
 
     public LocalDate getDate() {
         return date;
     }
 
-    public String getDocument() {
-        return document;
+    public String getDocumentFile() {
+        return documentFile;
+    }
+
+    public int getTeamId() {
+        return teamId;
+    }
+
+    public int getDocumentId() {
+        return documentId;
+
     }
 
 }

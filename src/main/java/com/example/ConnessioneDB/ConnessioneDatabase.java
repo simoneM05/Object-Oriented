@@ -1,36 +1,64 @@
-package com.example.ConnessioneDB;
+package com.example.ConnessioneDB; // Assicurati che il package sia corretto
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConnessioneDatabase {
     private static ConnessioneDatabase instance;
-    public Connection connection = null;
+    private Connection connection;
 
-    private String nome ="booh"; //Da definire
-    private String password = "booh"; // Da definire
-    private String url = "jdbc:mysql://localhost:3306/booh"; // stessa cosa
-    private String driver = "org.postgresql.Driver";
+    // ***** SOSTITUISCI CON LE TUE CREDENZIALI E URL REALI *****
+    private final String nomeUtente = "tuoUsername";
+    private final String passwordDB = "tuaPassword";
+    private final String url = "jdbc:postgresql://localhost:5432/tuoDatabase"; // Esempio per PostgreSQL
+    private final String driver = "org.postgresql.Driver";
+    // Se usi MySQL:
+    // private final String URL_DB = "jdbc:mysql://localhost:3306/tuoDatabase";
+    // private final String DRIVER_JDBC = "com.mysql.cj.jdbc.Driver";
 
-    // Constructor
     private ConnessioneDatabase() throws SQLException {
-        try{
+        try {
             Class.forName(driver);
-            connection = DriverManager.getConnection(url, nome , password);
-        }catch(ClassNotFoundException ex){
-            System.out.println("Database connection failed" + ex.getMessage());
-            ex.printStackTrace();
+            this.connection = DriverManager.getConnection(url, nomeUtente, passwordDB);
+        } catch (ClassNotFoundException ex) {
+            throw new SQLException("Driver JDBC (" + driver + ") non trovato. Assicurati che il JAR sia nel classpath.", ex);
+        } catch (SQLException ex) {
+            throw new SQLException("Connessione al database fallita. URL: " + url + ", Utente: " + nomeUtente, ex);
         }
     }
 
     public static ConnessioneDatabase getInstance() throws SQLException {
         if (instance == null) {
             instance = new ConnessioneDatabase();
+        } else {
 
-        }
-        else if(instance.connection.isClosed()){
-            instance = new ConnessioneDatabase();
+            try {
+                if (instance.connection == null || instance.connection.isClosed() || !instance.connection.isValid(1)) {
+
+                    instance.connection = DriverManager.getConnection(instance.url, instance.nomeUtente, instance.passwordDB);
+
+                }
+            } catch (SQLException e) {
+
+                throw new SQLException("Impossibile ristabilire la connessione al database.", e);
+            }
         }
         return instance;
+    }
+
+    public Connection getConnection() {
+        return this.connection;
+    }
+
+    public void close() {
+        try {
+            if (this.connection != null && !this.connection.isClosed()) {
+                this.connection.close();
+                // System.out.println("Connessione al database chiusa.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Considera un logger
+        }
     }
 }

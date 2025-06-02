@@ -20,6 +20,7 @@ public interface HackathonDAO {
     void deleteHackathon (Hackathon hackathon) throws NoSuchElementException;
     List<Hackathon> getAllHackathons();
 
+
     Optional<Hackathon> getHackathonByTitle (String title) throws NoSuchElementException;
 
 }

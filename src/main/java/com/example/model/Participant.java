@@ -6,26 +6,28 @@ public class Participant extends User {
 
     private String hackathonTitle; // used for found hackathon but in database saved with HackatonId
 
-    public String getTeamId() {
+    public int getTeamId() {
         return team.getId();
     }
 
     public Participant(String firstName, String lastName, String email, String password, String username,
-            Team team, Hackathon hackathon) {
-        super(firstName, lastName, email, password, username);
+                       Team team, Hackathon hackathon, int userId) {
+        super(firstName, lastName, email, password, username, userId);
         this.team = team;
         this.hackathonTitle = hackathon.getTitle();
     }
 
+
     public Participant(User user, Team team) {
-        super(user.getFirstName(), user.getLastName(), user.getEmail(), user.getPassword(), user.getUsername());
+        super(user.getFirstName(), user.getLastName(), user.getEmail(), user.getPassword(), user.getUsername(), user.getUserid());
         this.team = team;
     }
 
-    public void sendRequest(Participant participant, String message) {
+    public void sendRequest(Participant participant, String message, int requestId) {
         // todo: gestione per controllare se l'utente a cui viene mandata la richiesta
         // non fa gia parte di un team pieno e fa parte dello stesso hackaton
-        Request request = new Request(message, this.team.getId(), participant.getEmail());
+        // In Participant.java
+        Request request = new Request(message, team.getId(), participant.getEmail(), requestId, false); // Aggiunto 'false' per lo status iniziale
         // Todo: salva la richiesta nel database
     }
 

@@ -3,21 +3,28 @@ package com.example.model;
 public class Request {
     private boolean status = false; // true=accepted✅, false=rejected❌
     private String message;
-    private String teamId; // utente che manda la richiesta
-    private String emailRecive; // email del utente che riceve la richiesta
+    private int teamId; // utente che manda la richiesta
+    private String emailRecive;// email del utente che riceve la richiesta
+    private int requestId;
 
-    public Request(String message, String teamId, String emailRecive) { // teamId = utente che manda la richiesta
+    public Request(String message, int teamId, String emailRecive, int requestId, boolean status) { // teamId = utente che manda la richiesta
         this.message = message; // message del utente
         this.teamId = teamId; // teamId del partecipante che manda la richiesta
-        this.emailRecive = emailRecive; // email di chi riceve la richiesta
+        this.emailRecive = emailRecive;
+        // email di chi riceve la richiesta
+        this.requestId = requestId;
+        this.status = false;
     }
+
+
+
     public boolean isStatus() {
         return status;
     }
     public String getMessage() {
         return message;
     }
-    public String getTeamId() {
+    public int getTeamId() {
         return teamId;
     }
     public String getEmailRecive() {
@@ -31,7 +38,7 @@ public class Request {
     public void setMessage(String message) {
         this.message = message;
     }
-    public void setTeamId(String teamId) {
+    public void setTeamId(int teamId) {
         this.teamId = teamId;
     }
 

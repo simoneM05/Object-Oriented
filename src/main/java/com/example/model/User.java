@@ -1,7 +1,5 @@
 package com.example.model;
 
-import java.util.regex.Matcher;
-
 public class User {
 
     private String firstName;
@@ -9,8 +7,9 @@ public class User {
     private String email;
     private String password;
     private String username;
+    private int userId;
 
-    protected User(String firstName, String lastName, String email, String password, String username) {
+    protected User(String firstName, String lastName, String email, String password, String username, int userId) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -32,6 +31,7 @@ public class User {
         // {
         // this.password = password;
         // }
+        this.userId= userId;
 
     }
 
@@ -73,6 +73,10 @@ public class User {
 
     protected void setUsername(String username) {
         this.username = username;
+    }
+
+    protected int getUserid() {
+        return userId;
     }
 
     /*

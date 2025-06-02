@@ -13,11 +13,12 @@ public class Hackathon {
     private LocalDate startSub; // inizio iscrizioni
     private LocalDate endSub; // fine iscrizioni
     private String problem; // descrizione problema
+    private int idHackathon;
 
     //TODO = LEGGENDO MEGLIO LA TRACCIA, HACKATHON DEVE AVERE UN ISTANZA DI GIUDICE
 
     public Hackathon(String sede, LocalDate startDate, LocalDate enDate, String title, int partecipantNumber,
-                     int numMaxForTeam, LocalDate startSub, LocalDate endSub, String problem) {
+                     int numMaxForTeam, LocalDate startSub, LocalDate endSub, String problem, int idHackathon) {
 
         this.sede = sede;
         this.startDate = startDate;
@@ -27,12 +28,14 @@ public class Hackathon {
         this.startSub = startSub;
         this.endSub = endSub;
         this.problem = problem;
+        this.idHackathon = idHackathon;
         // if(/* INSERIRE CONDIZIONE PER IL TITOLO*/){
         // throw new TitoloNonValido("Questo Hackathon ha un titolo noon valido");
         // }
         // else{
         // this.title = title;
         // }
+
     }
 
     public String getSede() {
@@ -105,5 +108,9 @@ public class Hackathon {
 
     public void setProblem(String problem) {
         this.problem = problem;
+    }
+
+    public int getIdHackathon() {
+        return idHackathon;
     }
 }
