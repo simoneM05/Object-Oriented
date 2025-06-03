@@ -15,6 +15,9 @@ public class Vote {
         this.voteId = voteId;
 
     }
+    public Vote(){
+
+    }
     public int getJudgeId() {
         return judgeId;
     }

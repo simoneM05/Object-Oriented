@@ -13,14 +13,14 @@ import java.util.Optional;
 public interface HackathonDAO {
 
     //se l'hackathon esiste, lancio un eccezione che specifica la duplicazione
-    void addHackathon (Hackathon hackathon) throws DuplicateRequestException;
-    void updateHackathon (Hackathon hackathon);
+    void addHackathon (Hackathon hackathon) throws SQLException;
+    boolean updateHackathon (Hackathon hackathon)throws SQLException;
 
     // se voglio cancellare un Hackathon che non esiste, lancio un eccezione adatta a questo caso
-    void deleteHackathon (Hackathon hackathon) throws NoSuchElementException;
-    List<Hackathon> getAllHackathons();
+    boolean deleteHackathon (Hackathon hackathon) throws SQLException;
+    List<Hackathon> getAllHackathons() throws SQLException;
 
 
-    Optional<Hackathon> getHackathonByTitle (String title) throws NoSuchElementException;
+
 
 }

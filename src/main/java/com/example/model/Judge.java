@@ -8,6 +8,12 @@ public class Judge extends User {
         super(firstName, lastName, email, password, lastName, userId);
         this.hackathonTitle = hackathonTitle;
     }
+
+    public Judge()
+    {
+
+    }
+
     public void giveProblem(String problem) {
         // todo: fare in modo che vada inserito il problema solo al hackaton a cui fa
         // riferimeento il giudice

@@ -21,6 +21,9 @@ public class Team {
         this.hackathon = hackathon;
         this.vote = vote;
     }
+    public Team(){
+
+    }
 
     public void saveTeam() {
         // save team in database

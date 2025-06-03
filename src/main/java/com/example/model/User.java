@@ -34,6 +34,9 @@ public class User {
         this.userId= userId;
 
     }
+    public User(){
+
+    }
 
     protected String getFirstName() {
         return firstName;

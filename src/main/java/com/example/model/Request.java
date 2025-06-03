@@ -16,6 +16,10 @@ public class Request {
         this.status = false;
     }
 
+    public Request() {
+
+    }
+
 
 
     public boolean isStatus() {
@@ -45,5 +49,7 @@ public class Request {
     public void setEmailRecive(String emailRecive) {
         this.emailRecive = emailRecive;
     }
-
+    public int getRequestId() {
+        return requestId;
+    }
 }

@@ -17,6 +17,10 @@ public class Document {
         this.documentId = documentId;
     }
 
+    public Document() {
+
+    }
+
     public void setDate(LocalDate date) {
         this.date = date;
     }
@@ -24,6 +28,7 @@ public class Document {
     public void setDocument(String document) {
         this.documentFile = document;
     }
+
 
     public LocalDate getDate() {
         return date;
