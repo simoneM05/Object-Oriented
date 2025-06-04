@@ -21,14 +21,33 @@ public class Vote {
     public int getJudgeId() {
         return judgeId;
     }
+
     public int getTeamdId() {
         return teamdId;
     }
+
     public int getValore() {
         return valore;
     }
+
+    public int getVoteId(){
+        return voteId;
+    }
+
     public void setVote(int valore){
         this.valore = valore;
+    }
+
+    public void setJudgeId(int judgeId){
+        this.judgeId = judgeId;
+
+    }
+    public void setTeamdId(int teamdId){
+
+        this.teamdId = teamdId;
+    }
+    public void setVoteId(int voteId){
+        this.voteId = voteId;
     }
 
 

@@ -11,9 +11,18 @@ public class Organizer extends User {
         super(firstName, lastName, email, password, username, userId);
         this.hackathonTitle = hackathon.getTitle();
         this.registrationStatus = registrationStatus;
-
-
     }
+
+    public Organizer(){
+    }
+
+    public String getHackathonTitle() {
+       return hackathonTitle;
+    }
+    public void setHackathonTitle(String hackathonTitle) {
+       this.hackathonTitle = hackathonTitle;
+    }
+
 
     public void sendMailInvite(User user) {
         // todo: puo essere fatto solo a chi fa parte di quel hackaton
@@ -23,6 +32,8 @@ public class Organizer extends User {
 //{
 //
 //  }
+
+
 
     public void setRegistrationStatus(boolean registrationStatus) {
         this.registrationStatus = registrationStatus;

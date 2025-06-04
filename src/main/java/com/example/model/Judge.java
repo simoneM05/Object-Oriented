@@ -14,6 +14,14 @@ public class Judge extends User {
 
     }
 
+    public String getHackathonTitle() {
+        return hackathonTitle;
+    }
+
+    public void setHackathonTitle(String hackathonTitle) {
+        this.hackathonTitle = hackathonTitle;
+    }
+
     public void giveProblem(String problem) {
         // todo: fare in modo che vada inserito il problema solo al hackaton a cui fa
         // riferimeento il giudice

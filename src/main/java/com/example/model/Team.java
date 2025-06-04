@@ -37,12 +37,37 @@ public class Team {
         return id;
     }
 
+    public Document getDocument() {
+        return document;
+    }
+
+    public Hackathon getHackathon() {
+        return hackathon;
+    }
+
+    public Vote getVote() {
+        return vote;
+    }
+
+
+
     public void setName(String name) {
         this.name = name;
     }
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public void setDocument(Document document) {
+        this.document = document;
+    }
+    public void setHackathon(Hackathon hackathon) {
+        this.hackathon = hackathon;
+    }
+
+    public void setVote(Vote vote) {
+        this.vote = vote;
     }
 
     public void addMember(Participant participant) {

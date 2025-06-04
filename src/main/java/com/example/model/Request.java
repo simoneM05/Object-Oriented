@@ -34,11 +34,10 @@ public class Request {
     public String getEmailRecive() {
         return emailRecive;
     }
-    public void setStatus(boolean status) {
 
+    public void setStatus(boolean status) {
         this.status = status;
     }
-
     public void setMessage(String message) {
         this.message = message;
     }

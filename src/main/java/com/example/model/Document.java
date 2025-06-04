@@ -17,16 +17,23 @@ public class Document {
         this.documentId = documentId;
     }
 
+    // il costruttore vuoto è utile per l'implementazione della DAO (qualora dovessimo fare la DAO del documento)
     public Document() {
 
     }
-
     public void setDate(LocalDate date) {
         this.date = date;
     }
 
-    public void setDocument(String document) {
-        this.documentFile = document;
+    public void setDocumentFile(String documentFile) {
+        this.documentFile = documentFile;
+    }
+
+    public void setTeamId(int teamId) {
+        this.teamId = teamId;
+    }
+    public void setDocumentId(int documentId) {
+        this.documentId = documentId;
     }
 
 
@@ -44,7 +51,6 @@ public class Document {
 
     public int getDocumentId() {
         return documentId;
-
     }
 
 }

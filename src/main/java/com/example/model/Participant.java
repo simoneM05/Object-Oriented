@@ -6,9 +6,6 @@ public class Participant extends User {
 
     private String hackathonTitle; // used for found hackathon but in database saved with HackatonId
 
-    public int getTeamId() {
-        return team.getId();
-    }
 
     public Participant(String firstName, String lastName, String email, String password, String username,
                        Team team, Hackathon hackathon, int userId) {
@@ -21,6 +18,33 @@ public class Participant extends User {
     public Participant(User user, Team team) {
         super(user.getFirstName(), user.getLastName(), user.getEmail(), user.getPassword(), user.getUsername(), user.getUserid());
         this.team = team;
+    }
+
+    public Participant(){
+
+    }
+
+    public int getTeamId() {
+        return team.getId();
+    }
+
+    public void setTeamId(int teamId) {
+        this.team.setId(teamId);
+    }
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
+    }
+    public String getHackathonTitle() {
+        return hackathonTitle;
+    }
+
+    public void setHackathonTitle(String hackathonTitle) {
+        this.hackathonTitle = hackathonTitle;
     }
 
     public void sendRequest(Participant participant, String message, int requestId) {

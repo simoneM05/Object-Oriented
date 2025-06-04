@@ -37,6 +37,7 @@ public class Hackathon {
         // }
 
     }
+    //utile per la dao
     public Hackathon() {}
 
     public String getSede() {
@@ -47,6 +48,7 @@ public class Hackathon {
         this.sede = sede;
     }
 
+
     public LocalDate getStartDate() {
         return startDate;
     }
@@ -54,6 +56,7 @@ public class Hackathon {
     public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
+
 
     public LocalDate getEndDate() {
         return endDate;
@@ -63,6 +66,7 @@ public class Hackathon {
         this.endDate = endDate;
     }
 
+
     public String getTitle() {
         return title;
     }
@@ -70,6 +74,7 @@ public class Hackathon {
     public void setTitle(String title) {
         this.title = title;
     }
+
 
     public int getPartecipantNumber() {
         return partecipantNumber;
@@ -79,6 +84,7 @@ public class Hackathon {
         this.partecipantNumber = partecipantNumber;
     }
 
+
     public int getNumMaxForTeam() {
         return numMaxForTeam;
     }
@@ -86,6 +92,7 @@ public class Hackathon {
     public void setNumMaxForTeam(int numMaxForTeam) {
         this.numMaxForTeam = numMaxForTeam;
     }
+
 
     public LocalDate getStartSub() {
         return startSub;
@@ -95,6 +102,7 @@ public class Hackathon {
         this.startSub = startSub;
     }
 
+
     public LocalDate getEndSub() {
         return endSub;
     }
@@ -102,6 +110,7 @@ public class Hackathon {
     public void setEndSub(LocalDate endSub) {
         this.endSub = endSub;
     }
+
 
     public String getProblem() {
         return problem;
@@ -111,7 +120,13 @@ public class Hackathon {
         this.problem = problem;
     }
 
+
     public int getIdHackathon() {
         return idHackathon;
     }
+
+    public void setIdHackathon(int idHackathon) {
+        this.idHackathon = idHackathon;
+    }
+
 }
