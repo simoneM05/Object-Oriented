@@ -1,78 +1,78 @@
+
 package com.example.model;
 
+
+// import java.util.List; // Se vuoi mantenere la lista di membri qui
+
 public class Team {
+    private int id; // Corrisponde a id SERIAL PRIMARY KEY nel DB
+    private String teamName; // Corrisponde a team_name VARCHAR(255) NOT NULL UNIQUE
+    private int hackathonId; // Corrisponde a hackathon_id INT NOT NULL
+    private int maxMembers; // Corrisponde a max_members INT NOT NULL
 
-    private int id;
-    private String name;
-
-    //un team ha un documento, quindi devo necessariamente avere un'istanza di Document in Team
-    private Document document;
-
-    //da come abbiamo realizzato l'UML, un team fa parte di un Hackathon, quindi aggiungo il riferimento di Hackathon
-    private Hackathon hackathon;
-
-    //potrebbe aver senso avere in Team un istanza di voto, per recuperare facilmente l'informazione
-    private Vote vote;
-
-    public Team(int id, String name , Document document, Hackathon hackathon, Vote vote) {
+    // Costruttore completo
+    public Team(int id, String teamName, int hackathonId, int maxMembers) {
         this.id = id;
-        this.name = name;
-        this.document = document;
-        this.hackathon = hackathon;
-        this.vote = vote;
-    }
-    public Team(){
+        this.teamName = teamName;
+        this.hackathonId = hackathonId;
+        this.maxMembers = maxMembers;
 
     }
 
-    public void saveTeam() {
-        // save team in database
+    // Costruttore per creare un nuovo team (senza ID, gestito dal DB)
+    public Team(String teamName, int hackathonId, int maxMembers) {
+        this.teamName = teamName;
+        this.hackathonId = hackathonId;
+        this.maxMembers = maxMembers;
+
     }
 
-    public String getName() {
-        return name;
+    // Costruttore vuoto
+    public Team() {
     }
+
 
     public int getId() {
         return id;
-    }
-
-    public Document getDocument() {
-        return document;
-    }
-
-    public Hackathon getHackathon() {
-        return hackathon;
-    }
-
-    public Vote getVote() {
-        return vote;
-    }
-
-
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public void setId(int id) {
         this.id = id;
     }
 
-    public void setDocument(Document document) {
-        this.document = document;
-    }
-    public void setHackathon(Hackathon hackathon) {
-        this.hackathon = hackathon;
+    public String getTeamName() {
+        return teamName;
     }
 
-    public void setVote(Vote vote) {
-        this.vote = vote;
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
     }
 
-    public void addMember(Participant participant) {
-        // impostas il team id del partecipante
+    public int getHackathonId() {
+        return hackathonId;
+    }
+
+    public void setHackathonId(int hackathonId) {
+        this.hackathonId = hackathonId;
+    }
+
+    public int getMaxMembers() {
+        return maxMembers;
+    }
+
+    public void setMaxMembers(int maxMembers) {
+        this.maxMembers = maxMembers;
     }
 
 
+
+    @Override
+    public String toString() {
+        return "Team{" +
+                "id=" + id +
+                ", teamName='" + teamName + '\'' +
+                ", hackathonId=" + hackathonId +
+                ", maxMembers=" + maxMembers +
+                '}';
+    }
 }

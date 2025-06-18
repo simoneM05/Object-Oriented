@@ -1,56 +1,73 @@
+// Object-Oriented/src/main/java/com/example/model/Document.java
 package com.example.model;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime; // Usa LocalDateTime per TIMESTAMP nel DB
 
 public class Document {
-    private LocalDate date;
+    private int id; // Corrisponde a id SERIAL PRIMARY KEY nel DB
+    private String documentPath; // Corrisponde a document_path VARCHAR(255) NOT NULL
+    private LocalDateTime uploadDate; // Corrisponde a upload_date TIMESTAMP NOT NULL
+    private int teamId; // Corrisponde a team_id INT NOT NULL
 
-    //l'ho chiamato cosi' giusto per differenziarlo rispetto al nome della classe
-    private String documentFile;
-    private int teamId;
-    private int documentId;
-
-    public Document(LocalDate date, String document, int teamId, int documentId) {
-        this.date = date;
-        this.documentFile = document;
+    // Costruttore completo
+    public Document(int id, String documentPath, LocalDateTime uploadDate, int teamId) {
+        this.id = id;
+        this.documentPath = documentPath;
+        this.uploadDate = uploadDate;
         this.teamId = teamId;
-        this.documentId = documentId;
     }
 
-    // il costruttore vuoto è utile per l'implementazione della DAO (qualora dovessimo fare la DAO del documento)
+    // Costruttore per nuovo documento (senza ID)
+    public Document(String documentPath, LocalDateTime uploadDate, int teamId) {
+        this.documentPath = documentPath;
+        this.uploadDate = uploadDate;
+        this.teamId = teamId;
+    }
+
+    // Costruttore vuoto
     public Document() {
-
-    }
-    public void setDate(LocalDate date) {
-        this.date = date;
     }
 
-    public void setDocumentFile(String documentFile) {
-        this.documentFile = documentFile;
+    // --- Getter e Setter ---
+    public int getId() {
+        return id;
     }
 
-    public void setTeamId(int teamId) {
-        this.teamId = teamId;
-    }
-    public void setDocumentId(int documentId) {
-        this.documentId = documentId;
+    public void setId(int id) {
+        this.id = id;
     }
 
-
-    public LocalDate getDate() {
-        return date;
+    public String getDocumentPath() {
+        return documentPath;
     }
 
-    public String getDocumentFile() {
-        return documentFile;
+    public void setDocumentPath(String documentPath) {
+        this.documentPath = documentPath;
+    }
+
+    public LocalDateTime getUploadDate() {
+        return uploadDate;
+    }
+
+    public void setUploadDate(LocalDateTime uploadDate) {
+        this.uploadDate = uploadDate;
     }
 
     public int getTeamId() {
         return teamId;
     }
 
-    public int getDocumentId() {
-        return documentId;
+    public void setTeamId(int teamId) {
+        this.teamId = teamId;
     }
 
+    @Override
+    public String toString() {
+        return "Document{" +
+                "id=" + id +
+                ", documentPath='" + documentPath + '\'' +
+                ", uploadDate=" + uploadDate +
+                ", teamId=" + teamId +
+                '}';
+    }
 }

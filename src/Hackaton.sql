@@ -1,92 +1,133 @@
--- Tabella User: Deve essere creata per prima in quanto altre tabelle la referenziano
-CREATE TABLE "User" (
-    email VARCHAR(255) PRIMARY KEY, -- L'email è una buona chiave primaria per l'utente
-    firstName VARCHAR(255) NOT NULL,
-    lastName VARCHAR(255) NOT NULL,
-    password VARCHAR(255) NOT NULL,
-    username VARCHAR(255) UNIQUE NOT NULL -- Il username deve essere unico
+
+-- 1. Tabella users
+-- Utenti registrati alla piattaforma.
+-- Hanno credenziali d'accesso (username, password) e dati identificativi (nome, cognome, email).
+-- Email come chiave primaria perché presumibilmente unica per la registrazione.
+CREATE TABLE users (
+                       email VARCHAR(255) PRIMARY KEY,
+                       username VARCHAR(255) UNIQUE NOT NULL,
+                       password VARCHAR(255) NOT NULL,
+                       first_name VARCHAR(255) NOT NULL,
+                       last_name VARCHAR(255) NOT NULL
 );
 
----
-
-CREATE TABLE Hackaton (
-    id SERIAL PRIMARY KEY, -- PostgreSQL usa SERIAL per l'autoincremento
-    sede VARCHAR(255) NOT NULL,
-    startDate DATE NOT NULL,
-    endDate DATE NOT NULL,
-    participanTnumber INT,
-    numMaxForTeam INT,
-    startSub DATE,
-    endSub DATE,
-    problem TEXT, -- Usiamo TEXT per descrizioni più lunghe
-    title VARCHAR(255) NOT NULL UNIQUE -- Il titolo di un hackathon dovrebbe essere unico
+-- 2. Tabella organizers
+-- Ruolo di "Organizzatore" per un utente registrato.
+-- "Ogni hackathon... ha un organizzatore specifico (registrato alla piattaforma)."
+-- Questo implica una relazione 1:N tra Organizer e Hackathon (un organizzatore può organizzare molti hackathon, ma un hackathon ha un solo organizzatore).
+-- user_email è PK e FK per collegarlo all'utente registrato.
+CREATE TABLE organizers (
+                            user_email VARCHAR(255) PRIMARY KEY, -- Riferimento all'utente registrato
+                            CONSTRAINT fk_organizer_user FOREIGN KEY (user_email) REFERENCES users(email)
 );
 
----
-
-CREATE TABLE Team (
-    id SERIAL PRIMARY KEY, -- SERIAL per l'autoincremento
-    name VARCHAR(255) NOT NULL UNIQUE -- Il nome del team deve essere unico
+-- 3. Tabella judges
+-- Ruolo di "Giudice" per un utente registrato.
+-- "L'organizzatore seleziona un gruppo di giudici (selezionati tra gli utenti della piattaforma, invitandoli)."
+-- Implica che un giudice può giudicare più hackathon, e un hackathon può avere più giudici (N:M).
+-- user_email è PK e FK per collegarlo all'utente registrato.
+CREATE TABLE judges (
+    user_email VARCHAR(255) PRIMARY KEY, -- Riferimento all'utente registrato
+    CONSTRAINT fk_judge_user FOREIGN KEY (user_email) REFERENCES users(email)
 );
 
----
-
-CREATE TABLE Judge (
-    id SERIAL PRIMARY KEY, -- Ogni giudice ha un proprio ID
-    email VARCHAR(255) UNIQUE NOT NULL, -- Email del giudice, unica
-    HackatonId INT NOT NULL, -- Colonna per la chiave esterna
-    CONSTRAINT fk_judge_hackaton FOREIGN KEY (HackatonId) REFERENCES Hackaton(id)
+-- 4. Tabella hackathons
+-- Informazioni su ogni hackathon.
+-- Ha un organizzatore specifico.
+CREATE TABLE hackathons (
+                            id SERIAL PRIMARY KEY,
+                            title VARCHAR(255) UNIQUE NOT NULL, -- Titolo identificativo
+                            location VARCHAR(255) NOT NULL, -- Sede
+                            start_date TIMESTAMP NOT NULL, -- Intervallo di tempo (inizio)
+                            end_date TIMESTAMP NOT NULL, -- Intervallo di tempo (fine)
+                            max_participants INT NOT NULL, -- Numero massimo di iscritti
+                            max_team_size INT NOT NULL, -- Dimensione massima del team
+                            registration_start TIMESTAMP NOT NULL, -- Apertura registrazioni
+                            registration_end TIMESTAMP NOT NULL, -- Chiusura registrazioni (2 giorni prima dell'evento)
+                            problem_description TEXT, -- Descrizione del problema (pubblicata dai giudici)
+                            organizer_user_email VARCHAR(255) NOT NULL, -- L'organizzatore specifico
+                            CONSTRAINT fk_hackathon_organizer FOREIGN KEY (organizer_user_email) REFERENCES organizers(user_email)
 );
 
----
-
-CREATE TABLE Organizer (
-    id SERIAL PRIMARY KEY, -- Ogni organizzatore ha un proprio ID
-    email VARCHAR(255) UNIQUE NOT NULL, -- Email dell'organizzatore, unica
-    HackatonId INT NOT NULL, -- Colonna per la chiave esterna
-    CONSTRAINT fk_organizer_hackaton FOREIGN KEY (HackatonId) REFERENCES Hackaton(id)
+-- 5. Tabella participants
+-- Ruolo di "Partecipante" per un utente registrato.
+-- Un utente si registra per l'Hackathon di sua scelta.
+-- Può formare team o unirsi a team.
+-- user_email è PK e FK per collegarlo all'utente registrato.
+CREATE TABLE participants (
+                              user_email VARCHAR(255) PRIMARY KEY, -- Riferimento all'utente registrato
+                              hackathon_id INT NOT NULL, -- A quale hackathon partecipa
+                              team_id INT, -- Può essere NULL se non ancora in un team
+                              CONSTRAINT fk_participant_user FOREIGN KEY (user_email) REFERENCES users(email),
+                              CONSTRAINT fk_participant_hackathon FOREIGN KEY (hackathon_id) REFERENCES hackathons(id)
+    -- FK a teams verrà aggiunta dopo la creazione della tabella teams
 );
 
----
-
-CREATE TABLE Participant (
-    id SERIAL PRIMARY KEY, -- Ogni partecipante ha un proprio ID
-    email VARCHAR(255) UNIQUE NOT NULL, -- Email del partecipante, unica
-    teamId INT, -- Può essere NULL se un partecipante non è ancora in un team
-    hackatonId INT NOT NULL, -- Il partecipante deve essere associato a un hackathon
-    CONSTRAINT fk_participant_team FOREIGN KEY (teamId) REFERENCES Team(id),
-    CONSTRAINT fk_participant_hackaton FOREIGN KEY (hackatonId) REFERENCES Hackaton(id)
+-- 6. Tabella teams
+-- Gruppo di partecipanti che collaborano per risolvere il problema.
+-- Associato a un hackathon specifico.
+-- Ogni team ha un massimo di membri.
+CREATE TABLE teams (
+                       id SERIAL PRIMARY KEY,
+                       team_name VARCHAR(255) NOT NULL UNIQUE, -- Nome del team
+                       hackathon_id INT NOT NULL, -- Il team è per uno specifico hackathon
+                       max_members INT NOT NULL, -- Massimo di membri che possono comporre il team
+                       CONSTRAINT fk_team_hackathon FOREIGN KEY (hackathon_id) REFERENCES hackathons(id)
 );
 
----
+-- Aggiunge la Foreign Key a `teams` nella tabella `participants` (ora che `teams` esiste)
+ALTER TABLE participants
+    ADD CONSTRAINT fk_participant_team FOREIGN KEY (team_id) REFERENCES teams(id);
 
-CREATE TABLE Document (
-    id SERIAL PRIMARY KEY, -- Ogni documento ha un proprio ID
-    uploadDate DATE NOT NULL, -- 'DATE' è una parola chiave, meglio 'uploadDate'
-    documentPath VARCHAR(255) NOT NULL, -- Percorso o nome del file del documento
-    teamId INT NOT NULL, -- Il documento deve essere associato a un team
-    CONSTRAINT fk_document_team FOREIGN KEY (teamId) REFERENCES Team(id)
+
+-- 7. Tabella documents
+-- Aggiornamenti sui "progressi" caricati dai team.
+-- Contiene la possibile risoluzione al problema.
+CREATE TABLE documents (
+                           id SERIAL PRIMARY KEY,
+                           document_path VARCHAR(255) NOT NULL, -- Percorso o riferimento al file del documento
+                           upload_date TIMESTAMP NOT NULL, -- Quando il documento è stato caricato
+                           team_id INT NOT NULL, -- Il team che ha caricato il documento
+                           CONSTRAINT fk_document_team FOREIGN KEY (team_id) REFERENCES teams(id)
 );
 
----
-
-CREATE TABLE Request (
-    id SERIAL PRIMARY KEY, -- Ogni richiesta ha un proprio ID
-    message TEXT NOT NULL,
-    status BOOLEAN DEFAULT FALSE, -- Default a FALSE (in attesa)
-    teamId INT NOT NULL, -- La richiesta è fatta da un team
-    emailRecive VARCHAR(255) NOT NULL, -- L'email del destinatario della richiesta
-    CONSTRAINT fk_request_team FOREIGN KEY (teamId) REFERENCES Team(id),
-    CONSTRAINT fk_request_email_receive FOREIGN KEY (emailRecive) REFERENCES "User"(email)
+-- 8. Tabella requests
+-- Richieste tra partecipanti per unirsi a un team.
+-- Include un messaggio motivazionale.
+-- Ha uno stato (accettata/rifiutata/in attesa).
+CREATE TABLE requests (
+                          id SERIAL PRIMARY KEY,
+                          message TEXT NOT NULL, -- Messaggio motivazionale
+                          status VARCHAR(50) DEFAULT 'PENDING' NOT NULL, -- PENDING, ACCEPTED, REJECTED
+                          team_id INT NOT NULL, -- Il team a cui si riferisce la richiesta
+                          sender_participant_email VARCHAR(255) NOT NULL, -- Il partecipante che invia la richiesta
+                          receiver_participant_email VARCHAR(255) NOT NULL, -- L'utente che può accettare o rifiutare la richiesta
+                          CONSTRAINT fk_request_team FOREIGN KEY (team_id) REFERENCES teams(id),
+                          CONSTRAINT fk_request_sender FOREIGN KEY (sender_participant_email) REFERENCES participants(user_email),
+                          CONSTRAINT fk_request_receiver FOREIGN KEY (receiver_participant_email) REFERENCES participants(user_email)
 );
 
----
+-- 9. Tabella votes
+-- Voto assegnato dai giudici a ciascun team.
+-- Il voto può essere in un range da 0 a 10.
+CREATE TABLE votes (
+                       id SERIAL PRIMARY KEY,
+                       score INT NOT NULL CHECK (score >= 0 AND score <= 10), -- Voto da 0 a 10
+                       team_id INT NOT NULL, -- Il team che riceve il voto
+                       judge_user_email VARCHAR(255) NOT NULL, -- Il giudice che assegna il voto
+                       hackathon_id INT NOT NULL, -- L'hackathon a cui si riferisce il voto (per chiarezza e coerenza)
+                       CONSTRAINT fk_vote_team FOREIGN KEY (team_id) REFERENCES teams(id),
+                       CONSTRAINT fk_vote_judge FOREIGN KEY (judge_user_email) REFERENCES judges(user_email),
+                       CONSTRAINT fk_vote_hackathon FOREIGN KEY (hackathon_id) REFERENCES hackathons(id)
+);
 
-CREATE TABLE Vote (
-    id SERIAL PRIMARY KEY, -- Ogni voto ha un proprio ID
-    valore INT NOT NULL,
-    teamId INT NOT NULL, -- Il voto è per un team
-    judgeId INT NOT NULL, -- Il voto è dato da un giudice
-    CONSTRAINT fk_vote_team FOREIGN KEY (teamId) REFERENCES Team(id),
-    CONSTRAINT fk_vote_judge FOREIGN KEY (judgeId) REFERENCES Judge(id)
+-- 10. Tabella di giunzione judge_hackathons (per relazione Many-to-Many)
+-- Un giudice può giudicare più hackathon, e un hackathon ha più giudici.
+-- "L'organizzatore seleziona un gruppo di giudici (selezionati tra gli utenti della piattaforma, invitandoli)."
+CREATE TABLE judge_hackathons (
+                                  judge_user_email VARCHAR(255) NOT NULL,
+                                  hackathon_id INT NOT NULL,
+                                  PRIMARY KEY (judge_user_email, hackathon_id), -- PK composta per unicità della coppia
+                                  CONSTRAINT fk_jh_judge FOREIGN KEY (judge_user_email) REFERENCES judges(user_email),
+                                  CONSTRAINT fk_jh_hackathon FOREIGN KEY (hackathon_id) REFERENCES hackathons(id)
 );

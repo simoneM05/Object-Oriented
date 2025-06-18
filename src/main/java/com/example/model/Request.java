@@ -1,54 +1,113 @@
+
 package com.example.model;
 
 public class Request {
-    private boolean status = false; // true=accepted✅, false=rejected❌
-    private String message;
-    private int teamId; // utente che manda la richiesta
-    private String emailRecive;// email del utente che riceve la richiesta
-    private int requestId;
+    private int id; // Corrisponde a id SERIAL PRIMARY KEY nel DB
+    private String message; // Corrisponde a message TEXT NOT NULL
+    private String status; // Corrisponde a status VARCHAR(50) DEFAULT 'PENDING' NOT NULL
+    // Useremo stringhe come "PENDING", "ACCEPTED", "REJECTED"
+    private int teamId; // Corrisponde a team_id INT NOT NULL
+    private String senderUserEmail; // Corrisponde a sender_participant_email VARCHAR(255) NOT NULL
+    private String receiverUserEmail; // Corrisponde a receiver_participant_email VARCHAR(255) NOT NULL
 
-    public Request(String message, int teamId, String emailRecive, int requestId, boolean status) { // teamId = utente che manda la richiesta
-        this.message = message; // message del utente
-        this.teamId = teamId; // teamId del partecipante che manda la richiesta
-        this.emailRecive = emailRecive;
-        // email di chi riceve la richiesta
-        this.requestId = requestId;
-        this.status = false;
+    // Costruttore completo
+    public Request(int id, String message, String status, int teamId, String senderUserEmail, String receiverUserEmail) {
+        this.id = id;
+        this.message = message;
+        this.status = status;
+        this.teamId = teamId;
+        this.senderUserEmail = senderUserEmail;
+        this.receiverUserEmail = receiverUserEmail;
     }
 
+    // Costruttore per una nuova richiesta (senza ID e con stato PENDING di default)
+    public Request(String message, int teamId, String senderUserEmail, String receiverUserEmail) {
+        this.message = message;
+        this.status = "PENDING"; // Stato iniziale
+        this.teamId = teamId;
+        this.senderUserEmail = senderUserEmail;
+        this.receiverUserEmail = receiverUserEmail;
+    }
+
+    // Costruttore vuoto
     public Request() {
-
     }
 
-
-
-    public boolean isStatus() {
-        return status;
+    // --- Getter e Setter ---
+    public int getId() {
+        return id;
     }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getMessage() {
         return message;
     }
-    public int getTeamId() {
-        return teamId;
-    }
-    public String getEmailRecive() {
-        return emailRecive;
-    }
 
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
     public void setMessage(String message) {
         this.message = message;
     }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public int getTeamId() {
+        return teamId;
+    }
+
     public void setTeamId(int teamId) {
         this.teamId = teamId;
     }
 
-    public void setEmailRecive(String emailRecive) {
-        this.emailRecive = emailRecive;
+    public String getSenderUserEmail() {
+        return senderUserEmail;
     }
-    public int getRequestId() {
-        return requestId;
+
+    public void setSenderUserEmail(String senderUserEmail) {
+        this.senderUserEmail = senderUserEmail;
+    }
+
+    public String getReceiverUserEmail() {
+        return receiverUserEmail;
+    }
+
+    public void setReceiverUserEmail(String receiverUserEmail) {
+        this.receiverUserEmail = receiverUserEmail;
+    }
+
+    // Metodi per facilitare la gestione dello stato
+    public void accept() {
+        this.status = "ACCEPTED";
+    }
+
+    public void reject() {
+        this.status = "REJECTED";
+    }
+
+    public boolean isPending() {
+        return "PENDING".equals(this.status);
+    }
+
+    public boolean isAccepted() {
+        return "ACCEPTED".equals(this.status);
+    }
+
+    @Override
+    public String toString() {
+        return "Request{" +
+                "id=" + id +
+                ", message='" + message + '\'' +
+                ", status='" + status + '\'' +
+                ", teamId=" + teamId +
+                ", senderUserEmail='" + senderUserEmail + '\'' +
+                ", receiverUserEmail='" + receiverUserEmail + '\'' +
+                '}';
     }
 }

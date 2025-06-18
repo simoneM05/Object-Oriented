@@ -1,72 +1,57 @@
+// Object-Oriented/src/main/java/com/example/model/Participant.java
 package com.example.model;
 
-public class Participant extends User {
+public class Participant extends User { // Estende User
 
-    private Team team;
+    private int hackathonId; // ID dell'hackathon a cui partecipa
+    private Integer teamId;  // ID del team a cui appartiene (Integer per essere nullable)
 
-    private String hackathonTitle; // used for found hackathon but in database saved with HackatonId
-
-
-    public Participant(String firstName, String lastName, String email, String password, String username,
-                       Team team, Hackathon hackathon, int userId) {
-        super(firstName, lastName, email, password, username, userId);
-        this.team = team;
-        this.hackathonTitle = hackathon.getTitle();
+    // Costruttore completo, inclusi i campi specifici del partecipante
+    public Participant(int userId, String firstName, String lastName, String email, String username, String password,
+                       int hackathonId, Integer teamId) {
+        super(userId, firstName, lastName, email, username, password);
+        this.hackathonId = hackathonId;
+        this.teamId = teamId;
     }
 
-
-    public Participant(User user, Team team) {
-        super(user.getFirstName(), user.getLastName(), user.getEmail(), user.getPassword(), user.getUsername(), user.getUserid());
-        this.team = team;
+    // Costruttore senza userId (per nuovi partecipanti)
+    public Participant(String firstName, String lastName, String email, String username, String password,
+                       int hackathonId, Integer teamId) {
+        super(firstName, lastName, email, username, password);
+        this.hackathonId = hackathonId;
+        this.teamId = teamId;
     }
 
-    public Participant(){
-
+    // Costruttore vuoto
+    public Participant() {
+        super();
     }
 
-    public int getTeamId() {
-        return team.getId();
+    // --- Getter e Setter ---
+    public int getHackathonId() {
+        return hackathonId;
     }
 
-    public void setTeamId(int teamId) {
-        this.team.setId(teamId);
+    public void setHackathonId(int hackathonId) {
+        this.hackathonId = hackathonId;
     }
 
-    public Team getTeam() {
-        return team;
+    public Integer getTeamId() { // Usa Integer per permettere valore null
+        return teamId;
     }
 
-    public void setTeam(Team team) {
-        this.team = team;
-    }
-    public String getHackathonTitle() {
-        return hackathonTitle;
+    public void setTeamId(Integer teamId) { // Usa Integer per permettere valore null
+        this.teamId = teamId;
     }
 
-    public void setHackathonTitle(String hackathonTitle) {
-        this.hackathonTitle = hackathonTitle;
+    // Metodi specifici del Partecipante
+    public void sendRequest(Request request) {
+        // Logica per inviare una richiesta, probabilmente tramite il Controller e un RequestDAO
+        // "Ogni partecipante può contattare un altro utente iscritto e chiedere di unirsi al team di cui fa parte, fornendo un messaggio motivazionale"
     }
 
-    public void sendRequest(Participant participant, String message, int requestId) {
-        // todo: gestione per controllare se l'utente a cui viene mandata la richiesta
-        // non fa gia parte di un team pieno e fa parte dello stesso hackaton
-        // In Participant.java
-        Request request = new Request(message, team.getId(), participant.getEmail(), requestId, false); // Aggiunto 'false' per lo status iniziale
-        // Todo: salva la richiesta nel database
-    }
-
-    public void handleRequest(Request request) {
-        // Todo: deve impostare a true oppurer false e in caso venga impostato a true
-        /*
-         * richiamare la funzione addMember per il team di cui fa parte il ==>
-         * this.team.addMember(//ricerca nel database l'utente con quella mail e
-         * modifica il suo teamId con il teamId del partecipante che ha mandato la
-         * richiesta);
-         * partecipante
-         * 
-         */
+    public void handleRequest(Request request, boolean accept) {
+        // Logica per accettare o rifiutare una richiesta, aggiornando lo stato e potenzialmente il teamId del partecipante.
+        // "l'utente può accettare o rifiutare la richiesta."
     }
 }
-
-// pippo.sendRequest("ciao","pippo@gmail.com"); //* esempio di come mandare una
-// richiesta
