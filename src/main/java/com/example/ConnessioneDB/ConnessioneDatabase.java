@@ -9,9 +9,9 @@ public class ConnessioneDatabase {
     private Connection connection;
 
     // ***** SOSTITUISCI CON LE TUE CREDENZIALI E URL REALI *****
-    private final String nomeUtente = "tuoUsername";
-    private final String passwordDB = "tuaPassword";
-    private final String url = "jdbc:postgresql://localhost:5432/tuoDatabase"; // Esempio per PostgreSQL
+    private final String nomeUtente = "postgres";
+    private final String passwordDB = "1";
+    private final String url = "jdbc:postgresql://localhost:5432/Hackathon"; // Esempio per PostgreSQL
     private final String driver = "org.postgresql.Driver";
     // Se usi MySQL:
     // private final String URL_DB = "jdbc:mysql://localhost:3306/tuoDatabase";
@@ -22,7 +22,8 @@ public class ConnessioneDatabase {
             Class.forName(driver);
             this.connection = DriverManager.getConnection(url, nomeUtente, passwordDB);
         } catch (ClassNotFoundException ex) {
-            throw new SQLException("Driver JDBC (" + driver + ") non trovato. Assicurati che il JAR sia nel classpath.", ex);
+            throw new SQLException("Driver JDBC (" + driver + ") non trovato. Assicurati che il JAR sia nel classpath.",
+                    ex);
         } catch (SQLException ex) {
             throw new SQLException("Connessione al database fallita. URL: " + url + ", Utente: " + nomeUtente, ex);
         }
@@ -36,7 +37,8 @@ public class ConnessioneDatabase {
             try {
                 if (instance.connection == null || instance.connection.isClosed() || !instance.connection.isValid(1)) {
 
-                    instance.connection = DriverManager.getConnection(instance.url, instance.nomeUtente, instance.passwordDB);
+                    instance.connection = DriverManager.getConnection(instance.url, instance.nomeUtente,
+                            instance.passwordDB);
 
                 }
             } catch (SQLException e) {
