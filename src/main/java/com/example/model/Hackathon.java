@@ -3,17 +3,17 @@ package com.example.model;
 import java.time.LocalDateTime;
 
 public class Hackathon {
-    private int id;                                                  // Corrisponde a id SERIAL PRIMARY KEY nello schema SQL
-    private String title;                                            // Corrisponde a title VARCHAR(255) NOT NULL UNIQUE
-    private String location;                                         // Corrisponde a location VARCHAR(255) NOT NULL
-    private LocalDateTime startDate;                                 // Corrisponde a start_date TIMESTAMP NOT NULL
-    private LocalDateTime endDate;                                   // Corrisponde a end_date TIMESTAMP NOT NULL
-    private int maxParticipants;                                     // Corrisponde a max_participants INT NOT NULL
-    private int maxTeamSize;                                         // Corrisponde a max_team_size INT NOT NULL
-    private LocalDateTime registrationStart;                         // Corrisponde a registration_start TIMESTAMP NOT NULL
-    private LocalDateTime registrationEnd;                           // Corrisponde a registration_end TIMESTAMP NOT NULL
-    private String problemDescription;                               // Corrisponde a problem_description TEXT
-    private String organizerUserEmail;                               // Corrisponde a organizer_user_email VARCHAR(255) NOT NULL (FK)
+    private int id;                                                 
+    private String title;                                           
+    private String location;                                        
+    private LocalDateTime startDate;                                 
+    private LocalDateTime endDate;                                   
+    private int maxParticipants;                                     
+    private int maxTeamSize;                                         
+    private LocalDateTime registrationStart;                       
+    private LocalDateTime registrationEnd;                          
+    private String problemDescription;                               
+    private String organizerUserEmail;                              
 
     // Costruttore completo per inizializzare tutti i campi
     public Hackathon(int id, String title, String location, LocalDateTime startDate, LocalDateTime endDate,

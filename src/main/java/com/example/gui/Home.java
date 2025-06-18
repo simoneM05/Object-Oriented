@@ -20,7 +20,7 @@ public class Home {
             Home homeInstance = new Home();
             frameHome.setContentPane(homeInstance.getMainPanel());
             frameHome.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frameHome.setSize(900, 700); // Aumentato leggermente le dimensioni per la homepage
+            frameHome.setSize(900, 800); // Aumentato leggermente le dimensioni per la homepage
             frameHome.setLocationRelativeTo(null); // Centra la finestra
             frameHome.setVisible(true);
 

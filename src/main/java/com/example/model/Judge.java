@@ -4,8 +4,8 @@ public class Judge extends User {
 
     private String hackathonTitle; // hackaton a cui fa parte
 
-    public Judge(String firstName, String lastName, String email, String password, int userId) {
-        super(firstName, lastName, email, password, lastName, userId);
+    public Judge(String firstName, String lastName, String email,String username, String password, int userId) {
+        super(userId, firstName, lastName, email, username, password);
         this.hackathonTitle = hackathonTitle;
     }
 

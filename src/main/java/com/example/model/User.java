@@ -2,12 +2,12 @@
 package com.example.model;
 
 public class User {
-    private int userId;      // Mantenuto per compatibilità, ma email sarà la PK nel DB
+    private int userId; // Mantenuto per compatibilità, ma email sarà la PK nel DB
     private String firstName; // Corrisponde a first_name nel DB
-    private String lastName;  // Corrisponde a last_name nel DB
-    private String email;     // Corrisponde a email PRIMARY KEY nel DB
-    private String username;  // Corrisponde a username UNIQUE NOT NULL nel DB
-    private String password;  // Corrisponde a password NOT NULL nel DB
+    private String lastName; // Corrisponde a last_name nel DB
+    private String email; // Corrisponde a email PRIMARY KEY nel DB
+    private String username; // Corrisponde a username UNIQUE NOT NULL nel DB
+    private String password; // Corrisponde a password NOT NULL nel DB
 
     // Costruttore completo che include userId (se usato nel sistema)
     public User(int userId, String firstName, String lastName, String email, String username, String password) {
@@ -28,10 +28,8 @@ public class User {
         this.password = password;
     }
 
-
     public User() {
     }
-
 
     public int getUserId() {
         return userId;
