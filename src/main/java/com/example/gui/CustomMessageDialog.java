@@ -10,7 +10,7 @@ public class CustomMessageDialog extends JDialog {
 
     /**
      * Creates and displays a custom message dialog.
-     * 
+     *
      * @param parentComponent The parent component for the dialog.
      * @param message         The message to display.
      * @param title           The title of the dialog.

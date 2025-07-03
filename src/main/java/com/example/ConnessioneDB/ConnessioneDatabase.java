@@ -1,29 +1,27 @@
-package com.example.ConnessioneDB; // Assicurati che il package sia corretto
+package com.example.ConnessioneDB;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+
 public class ConnessioneDatabase {
     private static ConnessioneDatabase instance;
     private Connection connection;
 
-    // ***** SOSTITUISCI CON LE TUE CREDENZIALI E URL REALI *****
+
     private final String nomeUtente = "postgres";
-    private final String passwordDB = "1";
+    private final String passwordDB = "Diomede05";
     private final String url = "jdbc:postgresql://localhost:5432/Hackathon"; // Esempio per PostgreSQL
     private final String driver = "org.postgresql.Driver";
-    // Se usi MySQL:
-    // private final String URL_DB = "jdbc:mysql://localhost:3306/tuoDatabase";
-    // private final String DRIVER_JDBC = "com.mysql.cj.jdbc.Driver";
+
 
     private ConnessioneDatabase() throws SQLException {
         try {
             Class.forName(driver);
             this.connection = DriverManager.getConnection(url, nomeUtente, passwordDB);
         } catch (ClassNotFoundException ex) {
-            throw new SQLException("Driver JDBC (" + driver + ") non trovato. Assicurati che il JAR sia nel classpath.",
-                    ex);
+            throw new SQLException("Driver JDBC (" + driver + ") non trovato. Assicurati che il JAR sia nel classpath.", ex);
         } catch (SQLException ex) {
             throw new SQLException("Connessione al database fallita. URL: " + url + ", Utente: " + nomeUtente, ex);
         }

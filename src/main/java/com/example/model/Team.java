@@ -1,37 +1,33 @@
-
 package com.example.model;
 
-
-// import java.util.List; // Se vuoi mantenere la lista di membri qui
-
 public class Team {
-    private int id; // Corrisponde a id SERIAL PRIMARY KEY nel DB
-    private String teamName; // Corrisponde a team_name VARCHAR(255) NOT NULL UNIQUE
-    private int hackathonId; // Corrisponde a hackathon_id INT NOT NULL
-    private int maxMembers; // Corrisponde a max_members INT NOT NULL
+    private int id;
+    private String teamName;
+    private int hackathonId;
+    private int maxMembers;
+    private String leaderEmail; // ✅ AGGIUNTO
 
-    // Costruttore completo
-    public Team(int id, String teamName, int hackathonId, int maxMembers) {
+    // ✅ MODIFICATO: Costruttore completo
+    public Team(int id, String teamName, int hackathonId, int maxMembers, String leaderEmail) {
         this.id = id;
         this.teamName = teamName;
         this.hackathonId = hackathonId;
         this.maxMembers = maxMembers;
-
+        this.leaderEmail = leaderEmail;
     }
 
-    // Costruttore per creare un nuovo team (senza ID, gestito dal DB)
-    public Team(String teamName, int hackathonId, int maxMembers) {
+    // ✅ MODIFICATO: Costruttore per un nuovo team
+    public Team(String teamName, int hackathonId, int maxMembers, String leaderEmail) {
         this.teamName = teamName;
         this.hackathonId = hackathonId;
         this.maxMembers = maxMembers;
-
+        this.leaderEmail = leaderEmail;
     }
 
-    // Costruttore vuoto
     public Team() {
     }
 
-
+    // --- Getters e Setters ---
     public int getId() {
         return id;
     }
@@ -64,7 +60,14 @@ public class Team {
         this.maxMembers = maxMembers;
     }
 
+    // ✅ AGGIUNTO: Getter e Setter per leaderEmail
+    public String getLeaderEmail() {
+        return leaderEmail;
+    }
 
+    public void setLeaderEmail(String leaderEmail) {
+        this.leaderEmail = leaderEmail;
+    }
 
     @Override
     public String toString() {
@@ -73,6 +76,7 @@ public class Team {
                 ", teamName='" + teamName + '\'' +
                 ", hackathonId=" + hackathonId +
                 ", maxMembers=" + maxMembers +
+                ", leaderEmail='" + leaderEmail + '\'' + // ✅ AGGIUNTO
                 '}';
     }
 }

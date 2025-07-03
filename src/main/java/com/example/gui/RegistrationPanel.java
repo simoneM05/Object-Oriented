@@ -27,7 +27,7 @@ public class RegistrationPanel extends JPanel {
 
     private void initializeUI() {
         setLayout(new GridBagLayout());
-        setBackground(new Color(230, 230, 230)); // Light grey background, consistent with login
+        setBackground(new Color(230, 230, 230));
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(15, 15, 15, 15);

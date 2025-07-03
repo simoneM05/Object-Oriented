@@ -9,18 +9,10 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
-
 public interface HackathonDAO {
-
-    //se l'hackathon esiste, lancio un eccezione che specifica la duplicazione
     void addHackathon (Hackathon hackathon) throws SQLException;
-    boolean updateHackathon (Hackathon hackathon)throws SQLException;
-
-    // se voglio cancellare un Hackathon che non esiste, lancio un eccezione adatta a questo caso
-    boolean deleteHackathon (Hackathon hackathon) throws SQLException;
+    boolean updateHackathon (Hackathon hackathon) throws SQLException;
+    boolean deleteHackathon (int hackathonId) throws SQLException;
     List<Hackathon> getAllHackathons() throws SQLException;
-
-
-
-
+    Hackathon getHackathonById(int hackathonId) throws SQLException; // ✅ AGGIUNTO
 }

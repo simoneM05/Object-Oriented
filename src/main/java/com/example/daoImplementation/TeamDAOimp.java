@@ -2,10 +2,7 @@ package com.example.daoImplementation;
 
 import com.example.ConnessioneDB.ConnessioneDatabase;
 import com.example.dao.TeamDAO;
-import com.example.model.Request;
 import com.example.model.Team;
-import com.sun.jdi.request.DuplicateRequestException;
-import org.postgresql.util.PSQLException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,114 +10,76 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
 
 public class TeamDAOimp implements TeamDAO {
 
     @Override
     public void addTeam(Team team) throws SQLException {
-        Connection con = ConnessioneDatabase.getInstance().getConnection();
-        if (con == null) {
-            throw new SQLException("Connessione DB non riuscita");
+        // ✅ MODIFICATO: Query per includere leader_email
+        String sql = "INSERT INTO teams (team_name, hackathon_id, max_members, leader_email) VALUES (?, ?, ?, ?)";
+        // ✅ MODIFICATO: Uso di try-with-resources per la gestione sicura delle risorse
+        try (Connection con = ConnessioneDatabase.getInstance().getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setString(1, team.getTeamName());
+            ps.setInt(2, team.getHackathonId());
+            ps.setInt(3, team.getMaxMembers());
+            ps.setString(4, team.getLeaderEmail()); // ✅ AGGIUNTO
+
+            ps.executeUpdate();
         }
-        String sql ="";
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        try{
-            ps = con.prepareStatement(sql);
-
-            //ELENCO DI VALORI DA AGGIUNGERE
-            rs  = ps.executeQuery();
-            if(rs.next()){
-
-
-                //AGGIUNTA QUERY
-
-            }
-        }
-        finally{
-            if (rs != null) {
-                try{
-                    rs.close();
-
-                }catch(SQLException e){
-                    e.printStackTrace();
-                }
-            }
-            if (ps != null) {
-                try{
-                    ps.close();
-                }
-                catch(SQLException e){
-                    e.printStackTrace();
-                }
-            }
-        }
-        }
-
-
-
+    }
     @Override
-    public boolean updateTeam(Team team)  throws SQLException {
+    public boolean updateTeam(Team team) throws SQLException {
         Connection con = ConnessioneDatabase.getInstance().getConnection();
-        if (con == null ||con.isClosed()) {
+        if (con == null || con.isClosed()) {
             throw new SQLException("Connessione DB non riuscita");
         }
-        String sql = "";
+
+        String sql = "UPDATE teams SET team_name = ?, hackathon_id = ?, max_members = ? WHERE id = ?";
         PreparedStatement ps = null;
         int righeModificate = 0;
 
         try {
             ps = con.prepareStatement(sql);
-
-
-            //ELENCO DI VALORI DA AGGIORNARE
+            ps.setString(1, team.getTeamName());
+            ps.setInt(2, team.getHackathonId());
+            ps.setInt(3, team.getMaxMembers());
+            ps.setInt(4, team.getId());
 
             righeModificate = ps.executeUpdate();
-        }
-        finally {
+        } finally {
 
-            if (ps != null) {
-                try{
-                    ps.close();
-                }
-                catch(SQLException e){
-                    e.printStackTrace();
-                }
-            }
+            if (ps != null)
+                ps.close();
+
+
         }
 
-        //VERO SE ALMENO UNA RIGA è STATA MODIFICATA
         return righeModificate > 0;
     }
-
 
     @Override
     public boolean deleteTeam(Team team) throws SQLException {
         Connection con = ConnessioneDatabase.getInstance().getConnection();
 
-        if (con == null ||con.isClosed()) {
+        if (con == null || con.isClosed()) {
             throw new SQLException("Connessione DB non riuscita");
         }
 
-        //QUERY
-        String sql = "";
+        String sql = "DELETE FROM teams WHERE id = ?";
         PreparedStatement ps = null;
         int righeModificate = 0;
-        try{
+
+        try {
             ps = con.prepareStatement(sql);
-
-            //ELIMINAZIONE
-
+            ps.setInt(1, team.getId());
             righeModificate = ps.executeUpdate();
-        }
-        finally {
+        } finally {
             if (ps != null) {
-                try{
+                try {
                     ps.close();
-                }
-                catch(SQLException e){
+                } catch (SQLException e) {
                     e.printStackTrace();
                 }
             }
@@ -129,52 +88,96 @@ public class TeamDAOimp implements TeamDAO {
         return righeModificate > 0;
     }
 
-
-
     @Override
     public List<Team> getAllTeams() throws SQLException {
-
         Connection con = ConnessioneDatabase.getInstance().getConnection();
 
-        if (con == null ||con.isClosed()) {
+        if (con == null || con.isClosed()) {
             throw new SQLException("Connessione DB non riuscita");
         }
 
-        String sql = "SELECT * FROM request";
+        String sql = "SELECT * FROM teams";
         PreparedStatement ps = null;
         ResultSet rs = null;
         ArrayList<Team> teams = new ArrayList<Team>();
 
-        try{
+        try {
             ps = con.prepareStatement(sql);
-            while (rs.next()) {
-                //creazione di un oggetto Request per ogni tupla (DA CAPIRE SE USARE UN COSTRUTTORE VUOTO O MENO)
-                Team team = new Team();
+            rs = ps.executeQuery();
 
-                //serie di set per popolare il costruttore
+            while (rs.next()) {
+                Team team = new Team();
+                team.setId(rs.getInt("id"));
+                team.setTeamName(rs.getString("team_name"));
+                team.setHackathonId(rs.getInt("hackathon_id"));
+                team.setMaxMembers(rs.getInt("max_members"));
 
                 teams.add(team);
             }
-            rs = ps.executeQuery();
-        }
-        finally {
+        } finally {
             if (rs != null) {
-                try{
+                try {
                     rs.close();
-
-                }catch(SQLException e){
+                } catch (SQLException e) {
                     e.printStackTrace();
                 }
             }
             if (ps != null) {
-                try{
+                try {
                     ps.close();
-                }
-                catch(SQLException e){
+                } catch (SQLException e) {
                     e.printStackTrace();
                 }
             }
         }
         return teams;
+    }
+    // Aggiungi questi metodi alla classe TeamDAOimp esistente
+
+    @Override
+    public List<Team> getTeamsByHackathonId(int hackathonId) throws SQLException {
+        List<Team> teams = new ArrayList<>();
+        String sql = "SELECT * FROM teams WHERE hackathon_id = ?";
+        // ✅ MODIFICATO: Uso di try-with-resources
+        try (Connection con = ConnessioneDatabase.getInstance().getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, hackathonId);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Team team = new Team();
+                    team.setId(rs.getInt("id"));
+                    team.setTeamName(rs.getString("team_name"));
+                    team.setHackathonId(rs.getInt("hackathon_id"));
+                    team.setMaxMembers(rs.getInt("max_members"));
+                    team.setLeaderEmail(rs.getString("leader_email")); // ✅ AGGIUNTO
+                    teams.add(team);
+                }
+            }
+        }
+        return teams;
+    }
+
+    @Override
+    public Team getTeamById(int teamId) throws SQLException {
+        Team team = null;
+        String sql = "SELECT * FROM teams WHERE id = ?";
+        // ✅ MODIFICATO: Uso di try-with-resources
+        try (Connection con = ConnessioneDatabase.getInstance().getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, teamId);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    team = new Team();
+                    team.setId(rs.getInt("id"));
+                    team.setTeamName(rs.getString("team_name"));
+                    team.setHackathonId(rs.getInt("hackathon_id"));
+                    team.setMaxMembers(rs.getInt("max_members"));
+                    team.setLeaderEmail(rs.getString("leader_email")); // ✅ AGGIUNTO
+                }
+            }
+        }
+        return team;
     }
 }

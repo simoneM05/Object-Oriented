@@ -3,17 +3,17 @@ package com.example.model;
 import java.time.LocalDateTime;
 
 public class Hackathon {
-    private int id;                                                 
-    private String title;                                           
-    private String location;                                        
-    private LocalDateTime startDate;                                 
-    private LocalDateTime endDate;                                   
-    private int maxParticipants;                                     
-    private int maxTeamSize;                                         
-    private LocalDateTime registrationStart;                       
-    private LocalDateTime registrationEnd;                          
-    private String problemDescription;                               
-    private String organizerUserEmail;                              
+    private int id;
+    private String title;
+    private String location;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
+    private int maxParticipants;
+    private int maxTeamSize;
+    private LocalDateTime registrationStart;
+    private LocalDateTime registrationEnd;
+    private String problemDescription;
+    private String organizerUserEmail;
 
     // Costruttore completo per inizializzare tutti i campi
     public Hackathon(int id, String title, String location, LocalDateTime startDate, LocalDateTime endDate,
