@@ -72,12 +72,13 @@ CREATE TABLE participants (
 -- 6. DOCUMENTI
 -- ============================
 CREATE TABLE documents (
-    id            SERIAL PRIMARY KEY,
-    document_path VARCHAR(255) NOT NULL,
-    upload_date   TIMESTAMP    NOT NULL,
-    team_id       INT          NOT NULL,
-    CONSTRAINT fk_document_team FOREIGN KEY (team_id) REFERENCES teams (id) ON DELETE CASCADE
+    id             SERIAL PRIMARY KEY,
+    document_path  VARCHAR(255) NOT NULL,
+    upload_date    TIMESTAMP NOT NULL DEFAULT NOW(),
+    team_id        INT NOT NULL,
+    CONSTRAINT fk_document_team FOREIGN KEY (team_id) REFERENCES teams(id) ON DELETE CASCADE
 );
+
 
 -- ============================
 -- 7. RICHIESTE DI PARTECIPAZIONE

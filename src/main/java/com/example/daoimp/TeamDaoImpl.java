@@ -13,7 +13,7 @@ public class TeamDaoImpl implements TeamDAO {
 
     @Override
     public Optional<Team> findById(int id) {
-        String sql = "SELECT * FROM team WHERE id = ?";
+        String sql = "SELECT * FROM teams WHERE id = ?";
         try (Connection conn = DBConnection.getConnection();
                 PreparedStatement ps = conn.prepareStatement(sql)) {
 
@@ -22,7 +22,7 @@ public class TeamDaoImpl implements TeamDAO {
 
             if (rs.next()) {
                 int teamId = rs.getInt("id");
-                String name = rs.getString("name");
+                String name = rs.getString("team_name");
                 int hackathonId = rs.getInt("hackathon_id");
                 Team team = new Team(teamId, name, hackathonId);
                 return Optional.of(team);
@@ -36,7 +36,7 @@ public class TeamDaoImpl implements TeamDAO {
     @Override
     public List<Team> findAll() {
         List<Team> teams = new ArrayList<>();
-        String sql = "SELECT * FROM team";
+        String sql = "SELECT * FROM teams";
         try (Connection conn = DBConnection.getConnection();
                 Statement st = conn.createStatement();
                 ResultSet rs = st.executeQuery(sql)) {
@@ -57,7 +57,7 @@ public class TeamDaoImpl implements TeamDAO {
     @Override
     public List<Team> findByHackathonId(int hackathonId) {
         List<Team> teams = new ArrayList<>();
-        String sql = "SELECT * FROM team WHERE hackathon_id = ?";
+        String sql = "SELECT * FROM teams WHERE hackathon_id = ?";
         try (Connection conn = DBConnection.getConnection();
                 PreparedStatement ps = conn.prepareStatement(sql)) {
 
@@ -78,7 +78,7 @@ public class TeamDaoImpl implements TeamDAO {
 
     @Override
     public void save(Team team) {
-        String sql = "INSERT INTO team (name, hackathon_id) VALUES (?, ?)";
+        String sql = "INSERT INTO teams (name, hackathon_id) VALUES (?, ?)";
         try (Connection conn = DBConnection.getConnection();
                 PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
@@ -97,9 +97,9 @@ public class TeamDaoImpl implements TeamDAO {
 
     @Override
     public void update(Team team) {
-        String sql = "UPDATE team SET name = ?, hackathon_id = ? WHERE id = ?";
+        String sql = "UPDATE teams SET name = ?, hackathon_id = ? WHERE id = ?";
         try (Connection conn = DBConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+                PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, team.getName());
             ps.setInt(2, team.getHackathonId());
@@ -112,9 +112,9 @@ public class TeamDaoImpl implements TeamDAO {
 
     @Override
     public void delete(int id) {
-        String sql = "DELETE FROM team WHERE id = ?";
+        String sql = "DELETE FROM teams WHERE id = ?";
         try (Connection conn = DBConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+                PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setInt(1, id);
             ps.executeUpdate();

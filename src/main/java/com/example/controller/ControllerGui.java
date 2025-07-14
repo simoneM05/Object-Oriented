@@ -2,13 +2,19 @@ package com.example.controller;
 
 import com.example.dao.HackathonDAO;
 import com.example.dao.UserDAO;
+import com.example.daoimp.DocumentDaoImpl;
 import com.example.daoimp.HackathonDaoImpl;
+import com.example.daoimp.JudgeDaoImpl;
 import com.example.daoimp.PartecipantDaoImpl;
+import com.example.daoimp.TeamDaoImpl;
 import com.example.daoimp.UserDaoImpl;
 import com.example.model.User;
+import com.example.model.Document;
 import com.example.model.Hackathon;
+import com.example.model.Judge;
 import com.example.model.Partecipant;
 import com.example.model.Role;
+import com.example.model.Team;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,7 +23,10 @@ public class ControllerGui {
 
     private UserDAO userDAO = new UserDaoImpl();
     private PartecipantDaoImpl PartecipantDAO = new PartecipantDaoImpl();
-    private HackathonDAO hackathonDAO = new HackathonDaoImpl(); // <-- aggiungi questo
+    private HackathonDAO hackathonDAO = new HackathonDaoImpl();
+    private DocumentDaoImpl documentDAO = new DocumentDaoImpl();
+    private TeamDaoImpl teamDAO = new TeamDaoImpl();
+    private JudgeDaoImpl judgeDAO = new JudgeDaoImpl();
 
     public List<Hackathon> getAllHackathons() {
         return hackathonDAO.findAll();
@@ -46,6 +55,18 @@ public class ControllerGui {
     public boolean savePartecipant(Partecipant p) {
         PartecipantDAO.save(p);
         return true;
+    }
+
+    public List<Document> getDocumentsByHackathonId(int hackathonId) {
+        return documentDAO.findByHackathonId(hackathonId);
+    }
+
+    public Team getTeamById(int teamId) {
+        return teamDAO.findById(teamId).orElse(null);
+    }
+
+    public Judge getJudgeByEmail(String email) {
+        return judgeDAO.findByEmail(email).orElse(null);
     }
 
     public User login(String email, String password) {

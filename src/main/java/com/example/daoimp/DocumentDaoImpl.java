@@ -5,6 +5,7 @@ import com.example.database.DBConnection;
 import com.example.model.Document;
 
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -13,7 +14,7 @@ public class DocumentDaoImpl implements DocumentDAO {
 
     @Override
     public Optional<Document> findById(int id) {
-        String sql = "SELECT * FROM document WHERE id = ?";
+        String sql = "SELECT * FROM documents WHERE id = ?";
         try (Connection conn = DBConnection.getConnection();
                 PreparedStatement ps = conn.prepareStatement(sql)) {
 
@@ -31,7 +32,7 @@ public class DocumentDaoImpl implements DocumentDAO {
     @Override
     public List<Document> findAll() {
         List<Document> documents = new ArrayList<>();
-        String sql = "SELECT * FROM document";
+        String sql = "SELECT * FROM documents";
         try (Connection conn = DBConnection.getConnection();
                 Statement st = conn.createStatement();
                 ResultSet rs = st.executeQuery(sql)) {
@@ -46,27 +47,9 @@ public class DocumentDaoImpl implements DocumentDAO {
     }
 
     @Override
-    public List<Document> findByHackathonId(int hackathonId) {
-        List<Document> documents = new ArrayList<>();
-        String sql = "SELECT * FROM document WHERE hackathon_id = ?";
-        try (Connection conn = DBConnection.getConnection();
-                PreparedStatement ps = conn.prepareStatement(sql)) {
-
-            ps.setInt(1, hackathonId);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                documents.add(mapRowToDocument(rs));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return documents;
-    }
-
-    @Override
     public List<Document> findByTeamId(int teamId) {
         List<Document> documents = new ArrayList<>();
-        String sql = "SELECT * FROM document WHERE team_id = ?";
+        String sql = "SELECT * FROM documents WHERE team_id = ?";
         try (Connection conn = DBConnection.getConnection();
                 PreparedStatement ps = conn.prepareStatement(sql)) {
 
@@ -83,13 +66,14 @@ public class DocumentDaoImpl implements DocumentDAO {
 
     @Override
     public void save(Document document) {
-        String sql = "INSERT INTO document (hackathon_id, team_id, file_path) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO documents (filename, upload_date, team_id) VALUES (?, ?, ?)";
         try (Connection conn = DBConnection.getConnection();
                 PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-            ps.setInt(1, document.getHackathonId());
-            ps.setInt(2, document.getTeamId());
-            ps.setString(3, document.getFileName()); // Presumo che file_path corrisponda a fileName nel modello
+            ps.setString(1, document.getFileName());
+            ps.setTimestamp(2, Timestamp.valueOf(document.getUploadDate()));
+            ps.setInt(3, document.getTeamId());
+
             ps.executeUpdate();
 
             ResultSet keys = ps.getGeneratedKeys();
@@ -103,14 +87,15 @@ public class DocumentDaoImpl implements DocumentDAO {
 
     @Override
     public void update(Document document) {
-        String sql = "UPDATE document SET hackathon_id = ?, team_id = ?, file_path = ? WHERE id = ?";
+        String sql = "UPDATE documents SET filename = ?, upload_date = ?, team_id = ? WHERE id = ?";
         try (Connection conn = DBConnection.getConnection();
                 PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setInt(1, document.getHackathonId());
-            ps.setInt(2, document.getTeamId());
-            ps.setString(3, document.getFileName());
+            ps.setString(1, document.getFileName());
+            ps.setTimestamp(2, Timestamp.valueOf(document.getUploadDate()));
+            ps.setInt(3, document.getTeamId());
             ps.setInt(4, document.getId());
+
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -119,7 +104,7 @@ public class DocumentDaoImpl implements DocumentDAO {
 
     @Override
     public void delete(int id) {
-        String sql = "DELETE FROM document WHERE id = ?";
+        String sql = "DELETE FROM documents WHERE id = ?";
         try (Connection conn = DBConnection.getConnection();
                 PreparedStatement ps = conn.prepareStatement(sql)) {
 
@@ -127,14 +112,35 @@ public class DocumentDaoImpl implements DocumentDAO {
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+            // Consider logging the exception
         }
     }
 
     private Document mapRowToDocument(ResultSet rs) throws SQLException {
         int id = rs.getInt("id");
-        int hackathonId = rs.getInt("hackathon_id");
+        String documentPath = rs.getString("filename");
+        LocalDateTime uploadDate = rs.getTimestamp("upload_date").toLocalDateTime();
         int teamId = rs.getInt("team_id");
-        String filePath = rs.getString("file_path");
-        return new Document(id, hackathonId, teamId, filePath);
+
+        return new Document(id, documentPath, uploadDate, teamId);
+    }
+
+    @Override
+    public List<Document> findByHackathonId(int hackathonId) {
+        List<Document> documents = new ArrayList<>();
+        String sql = "SELECT d.* FROM documents d JOIN teams t ON d.team_id = t.id WHERE t.hackathon_id = ?";
+
+        try (Connection conn = DBConnection.getConnection();
+                PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, hackathonId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                documents.add(mapRowToDocument(rs));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return documents;
     }
 }

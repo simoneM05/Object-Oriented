@@ -1,16 +1,33 @@
 package com.example.model;
 
+import java.time.LocalDateTime;
+
 public class Document {
     private int id;
-    private int hackathonId;
     private int teamId;
+    private LocalDateTime uploadDate;
     private String fileName;
 
-    public Document(int id, int hackathonId, int teamId, String fileName) {
-        this.id = id;
-        this.hackathonId = hackathonId;
+    public Document(int teamId, String fileName) {
         this.teamId = teamId;
         this.fileName = fileName;
+        this.uploadDate = LocalDateTime.now();
+    }
+
+    public Document(int id, String fileName, LocalDateTime uploadDate, int teamId) {
+        this.id = id;
+        this.fileName = fileName;
+        this.uploadDate = uploadDate;
+        this.teamId = teamId;
+    }
+
+    // Getters and Setters
+    public LocalDateTime getUploadDate() {
+        return uploadDate;
+    }
+
+    public void setUploadDate(LocalDateTime uploadDate) {
+        this.uploadDate = uploadDate;
     }
 
     public int getId() {
@@ -19,14 +36,6 @@ public class Document {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public int getHackathonId() {
-        return hackathonId;
-    }
-
-    public void setHackathonId(int hackathonId) {
-        this.hackathonId = hackathonId;
     }
 
     public int getTeamId() {
@@ -49,9 +58,9 @@ public class Document {
     public String toString() {
         return "Document{" +
                 "id=" + id +
-                ", hackathonId=" + hackathonId +
                 ", teamId=" + teamId +
                 ", fileName='" + fileName + '\'' +
+                ", uploadDate=" + uploadDate +
                 '}';
     }
 }
