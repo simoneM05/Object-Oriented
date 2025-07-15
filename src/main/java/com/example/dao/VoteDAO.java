@@ -9,13 +9,17 @@ public interface VoteDAO {
 
     List<Vote> findAll();
 
-    List<Vote> findByHackathonId(int hackathonId);
+    List<Vote> findByHackathonId(int hackathonId, String judgeEmail);
 
-    List<Vote> findByJudgeId(int judgeId);
+    public List<Vote> findByHackathonIdExcludingJudgeVotes(int hackathonId, String judgeEmail);
+
+    public boolean hasJudgeVotedForTeam(int hackathonId, String judgeEmail, int teamId);
+
+    List<Vote> findByJudgeEmail(String judgeEmail);
 
     List<Vote> findByTeamId(int teamId);
 
-    void save(Vote vote);
+    public void save(Vote vote, int documentID);
 
     void update(Vote vote);
 

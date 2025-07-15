@@ -126,7 +126,38 @@ public class DocumentDaoImpl implements DocumentDAO {
     }
 
     @Override
-    public List<Document> findByHackathonId(int hackathonId) {
+    public List<Document> findByHackathonId(int hackathonId, String judgeEmail) {
+        List<Document> documents = new ArrayList<>();
+        String sql = "SELECT d.* FROM documents d " +
+                "JOIN teams t ON d.team_id = t.id " +
+                "WHERE t.hackathon_id = ? " +
+                "AND NOT EXISTS ( " +
+                "    SELECT 1 FROM votes v " +
+                "    WHERE v.document_id = d.id " +
+                "    AND v.hackathon_id = ? " +
+                "    AND v.judge_user_email = ? " +
+                ")";
+
+        try (Connection conn = DBConnection.getConnection();
+                PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, hackathonId);
+            ps.setInt(2, hackathonId);
+            ps.setString(3, judgeEmail);
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                documents.add(mapRowToDocument(rs));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return documents;
+    }
+
+    // Metodo alternativo per mantenere il comportamento originale
+    public List<Document> findAllByHackathonId(int hackathonId) {
         List<Document> documents = new ArrayList<>();
         String sql = "SELECT d.* FROM documents d JOIN teams t ON d.team_id = t.id WHERE t.hackathon_id = ?";
 
@@ -143,4 +174,5 @@ public class DocumentDaoImpl implements DocumentDAO {
         }
         return documents;
     }
+
 }

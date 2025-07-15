@@ -104,6 +104,7 @@ CREATE TABLE votes (
     team_id          INT          NOT NULL,
     judge_user_email VARCHAR(255) NOT NULL,
     hackathon_id     INT          NOT NULL,
+    comment          TEXT,
     CONSTRAINT fk_vote_team FOREIGN KEY (team_id) REFERENCES teams (id) ON DELETE CASCADE,
     CONSTRAINT fk_vote_judge FOREIGN KEY (judge_user_email) REFERENCES judges (user_email) ON DELETE CASCADE,
     CONSTRAINT fk_vote_hackathon FOREIGN KEY (hackathon_id) REFERENCES hackathons (id) ON DELETE CASCADE

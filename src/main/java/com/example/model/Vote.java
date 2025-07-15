@@ -3,22 +3,22 @@ package com.example.model;
 public class Vote {
     private int id;
     private int hackathonId;
-    private int judgeId; // potresti usare email o un altro identificativo, qui uso int per esempio
+    private String judgeEmail; // potresti usare email o un altro identificativo, qui uso int per esempio
     private int teamId;
     private int score;
     private String comment;
 
-    public Vote(int id, int hackathonId, int judgeId, int teamId, int score, String comment) {
+    public Vote(int id, int hackathonId, String judgeEmail, int teamId, int score, String comment) {
         this.id = id;
         this.hackathonId = hackathonId;
-        this.judgeId = judgeId;
+        this.judgeEmail = judgeEmail;
         this.teamId = teamId;
         this.score = score;
         this.comment = comment;
     }
 
-    public Vote(int hackathonId, int judgeId, int teamId, int score, String comment) {
-        this(0, hackathonId, judgeId, teamId, score, comment);
+    public Vote(int hackathonId, String judgeEmail, int teamId, int score, String comment) {
+        this(0, hackathonId, judgeEmail, teamId, score, comment);
     }
 
     public int getId() {
@@ -37,12 +37,12 @@ public class Vote {
         this.hackathonId = hackathonId;
     }
 
-    public int getJudgeId() {
-        return judgeId;
+    public String getJudgeEmail() {
+        return judgeEmail;
     }
 
-    public void setJudgeId(int judgeId) {
-        this.judgeId = judgeId;
+    public void setJudgeEmail(String judgeEmail) {
+        this.judgeEmail = judgeEmail;
     }
 
     public int getTeamId() {
@@ -74,7 +74,7 @@ public class Vote {
         return "Vote{" +
                 "id=" + id +
                 ", hackathonId=" + hackathonId +
-                ", judgeId=" + judgeId +
+                ", judgeEmail=" + judgeEmail +
                 ", teamId=" + teamId +
                 ", score=" + score +
                 ", comment='" + comment + '\'' +

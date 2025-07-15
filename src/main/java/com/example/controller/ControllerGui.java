@@ -8,7 +8,9 @@ import com.example.daoimp.JudgeDaoImpl;
 import com.example.daoimp.PartecipantDaoImpl;
 import com.example.daoimp.TeamDaoImpl;
 import com.example.daoimp.UserDaoImpl;
+import com.example.daoimp.VoteDaoImpl;
 import com.example.model.User;
+import com.example.model.Vote;
 import com.example.model.Document;
 import com.example.model.Hackathon;
 import com.example.model.Judge;
@@ -27,6 +29,7 @@ public class ControllerGui {
     private DocumentDaoImpl documentDAO = new DocumentDaoImpl();
     private TeamDaoImpl teamDAO = new TeamDaoImpl();
     private JudgeDaoImpl judgeDAO = new JudgeDaoImpl();
+    private VoteDaoImpl voteDAO = new VoteDaoImpl();
 
     public List<Hackathon> getAllHackathons() {
         return hackathonDAO.findAll();
@@ -57,8 +60,8 @@ public class ControllerGui {
         return true;
     }
 
-    public List<Document> getDocumentsByHackathonId(int hackathonId) {
-        return documentDAO.findByHackathonId(hackathonId);
+    public List<Document> getDocumentsByHackathonId(int hackathonId, String judgeEmail) {
+        return documentDAO.findByHackathonId(hackathonId, judgeEmail);
     }
 
     public Team getTeamById(int teamId) {
@@ -67,6 +70,11 @@ public class ControllerGui {
 
     public Judge getJudgeByEmail(String email) {
         return judgeDAO.findByEmail(email).orElse(null);
+    }
+
+    public void saveVote(Vote vote, int documentID) {
+        // Assuming there's a VoteDAO interface with a save method
+        voteDAO.save(vote, documentID);
     }
 
     public User login(String email, String password) {

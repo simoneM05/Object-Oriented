@@ -9,9 +9,11 @@ public interface DocumentDAO {
 
     List<Document> findAll();
 
-    List<Document> findByHackathonId(int hackathonId);
-
     List<Document> findByTeamId(int teamId);
+
+    public List<Document> findByHackathonId(int hackathonId, String judgeEmail);
+
+    public List<Document> findAllByHackathonId(int hackathonId);
 
     void save(Document document);
 

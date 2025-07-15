@@ -6,6 +6,8 @@ import com.example.controller.ControllerGui;
 import com.example.model.Document;
 import com.example.model.Judge;
 import com.example.model.User;
+import com.example.model.Vote;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -120,7 +122,7 @@ public class JudgeDashboard extends JPanel {
             submissionsPanel.add(noJudgeLabel);
             return;
         }
-        List<Document> documents = controllerGui.getDocumentsByHackathonId(judge.getHackathonId());
+        List<Document> documents = controllerGui.getDocumentsByHackathonId(judge.getHackathonId(), judge.getEmail());
         if (documents.isEmpty()) {
             JLabel noSubmissionsLabel = new JLabel("Nessuna submission disponibile.");
             noSubmissionsLabel.setFont(new Font(Font.SANS_SERIF, Font.ITALIC, 14));
@@ -129,25 +131,26 @@ public class JudgeDashboard extends JPanel {
             return;
         }
 
-        int i = 0;
         for (Document document : documents) {
             String teamName = controllerGui.getTeamById(document.getTeamId()).getName();
             String submissionTime = new SimpleDateFormat("dd/MM/yyyy HH:mm")
                     .format(Date.from(document.getUploadDate().atZone(java.time.ZoneId.systemDefault()).toInstant()));
             gbc.gridy = submissionsPanel.getComponentCount();
-            JPanel submissionCard = createSubmissionCard(teamName, submissionTime, document.getFileName());
+            JPanel submissionCard = createSubmissionCard(document.getTeamId(), teamName, submissionTime,
+                    document.getId(),
+                    document.getFileName());
             submissionsPanel.add(submissionCard, gbc);
 
             // Spacer per spingere le card verso l'alto
             gbc.gridy = documents.size();
             gbc.weighty = 1.0;
             submissionsPanel.add(Box.createVerticalGlue(), gbc);
-            i++;
         }
 
     }
 
-    private JPanel createSubmissionCard(String teamName, String submissionTime, String documentName) {
+    private JPanel createSubmissionCard(int teamId, String teamName, String submissionTime, int documentId,
+            String documentName) {
         JPanel card = new JPanel(new BorderLayout(15, 10));
         card.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(new Color(206, 212, 218), 1),
@@ -197,6 +200,13 @@ public class JudgeDashboard extends JPanel {
         voteSpinner.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 14));
         votePanel.add(voteSpinner, BorderLayout.CENTER);
 
+        // TextArea per il commento del giudice
+        JTextArea commentArea = new JTextArea(3, 20);
+        commentArea.setLineWrap(true);
+        commentArea.setWrapStyleWord(true);
+        commentArea.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 12));
+        commentArea.setBorder(BorderFactory.createTitledBorder("Commento"));
+
         // Bottone per confermare il voto
         JButton voteButton = new JButton("Invia Voto");
         voteButton.setPreferredSize(new Dimension(80, 25));
@@ -204,7 +214,30 @@ public class JudgeDashboard extends JPanel {
         voteButton.setForeground(Color.WHITE);
         voteButton.setFocusPainted(false);
         voteButton.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 11));
-        votePanel.add(voteButton, BorderLayout.SOUTH);
+        voteButton.addActionListener(e -> {
+            int vote = (int) voteSpinner.getValue();
+            if (vote > 10 || vote < 1) {
+                JOptionPane.showMessageDialog(this, "Il voto deve essere tra 1 e 10", "Errore",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            String commento = commentArea.getText();
+            Vote newVote = new Vote(judge.getHackathonId(), judge.getEmail(), teamId, vote, commento);
+            controllerGui.saveVote(newVote, documentId);
+            JOptionPane.showMessageDialog(this, "Voto inviato con successo!", "Successo",
+                    JOptionPane.INFORMATION_MESSAGE);
+            refreshSubmissions();
+
+        });
+
+        // Pannello per contenere textarea e bottone nella zona SOUTH
+        JPanel southPanel = new JPanel(new BorderLayout(5, 5));
+        southPanel.setBackground(Color.WHITE);
+        southPanel.add(commentArea, BorderLayout.CENTER);
+        southPanel.add(voteButton, BorderLayout.SOUTH);
+
+        // Aggiungi il pannello combinato al votePanel
+        votePanel.add(southPanel, BorderLayout.SOUTH);
 
         rightPanel.add(votePanel);
         card.add(rightPanel, BorderLayout.EAST);
@@ -236,6 +269,22 @@ public class JudgeDashboard extends JPanel {
                 System.out.println("Descrizione: " + description);
             }
         });
+    }
+
+    private void refreshSubmissions() {
+        // Rimuovi tutti i componenti dal pannello delle submission
+        submissionsPanel.removeAll();
+
+        // Ricarica le submission
+        loadDummySubmissions();
+
+        // Rigenera il layout e ridisegna il pannello
+        submissionsPanel.revalidate();
+        submissionsPanel.repaint();
+
+        // Aggiorna anche lo scroll pane
+        submissionsScrollPane.revalidate();
+        submissionsScrollPane.repaint();
     }
 
     public void loadUserData(User user) {
