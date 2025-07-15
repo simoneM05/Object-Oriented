@@ -5,6 +5,7 @@ import javax.swing.border.EmptyBorder;
 
 import com.example.controller.ControllerGui;
 import com.example.model.Hackathon;
+import com.example.model.Partecipant;
 import com.example.model.User;
 
 import java.awt.*;
@@ -28,6 +29,10 @@ public class OrganizerDashboard extends JPanel {
     private JScrollPane hackathonScrollPane;
     private JButton refreshButton; // Riferimento al bottone di refresh
 
+    // Nuovi componenti per la gestione giudici
+    private JPanel judgesPanel;
+    private JScrollPane judgesScrollPane;
+
     // controller gui
     ControllerGui controller = new ControllerGui();
     private String email;
@@ -40,6 +45,7 @@ public class OrganizerDashboard extends JPanel {
     private static final Color WARNING_COLOR = new Color(243, 156, 18);
     private static final Color LIGHT_GRAY = new Color(245, 245, 245);
     private static final Color CARD_BACKGROUND = new Color(255, 255, 255);
+    private static final Color JUDGE_COLOR = new Color(142, 68, 173);
 
     public OrganizerDashboard() {
         setLayout(new BorderLayout(15, 15));
@@ -49,6 +55,7 @@ public class OrganizerDashboard extends JPanel {
         initComponents();
         addListeners();
         refreshHackathonList(); // Carica gli hackathon iniziali al startup
+        loadMockJudges(); // Carica i giudici fittizi
     }
 
     private void initComponents() {
@@ -56,8 +63,8 @@ public class OrganizerDashboard extends JPanel {
         JPanel headerPanel = createHeaderPanel();
         add(headerPanel, BorderLayout.NORTH);
 
-        // Main content con due sezioni
-        JPanel mainPanel = new JPanel(new GridLayout(1, 2, 20, 0));
+        // Main content con tre sezioni
+        JPanel mainPanel = new JPanel(new GridLayout(1, 3, 15, 0));
         mainPanel.setOpaque(false);
 
         // Sezione creazione hackathon
@@ -67,6 +74,10 @@ public class OrganizerDashboard extends JPanel {
         // Sezione gestione hackathon esistenti
         JPanel managementSection = createManagementSection();
         mainPanel.add(managementSection);
+
+        // Sezione gestione giudici
+        JPanel judgesSection = createJudgesSection();
+        mainPanel.add(judgesSection);
 
         add(mainPanel, BorderLayout.CENTER);
     }
@@ -203,6 +214,31 @@ public class OrganizerDashboard extends JPanel {
         hackathonScrollPane.getVerticalScrollBar().setUnitIncrement(16);
 
         section.add(hackathonScrollPane, BorderLayout.CENTER);
+        return section;
+    }
+
+    private JPanel createJudgesSection() {
+        JPanel section = new JPanel(new BorderLayout(0, 15));
+        section.setOpaque(false);
+
+        // Titolo sezione
+        JLabel sectionTitle = new JLabel(" Gestisci Giudici");
+        sectionTitle.setFont(new Font("Segoe UI", Font.BOLD, 18));
+        sectionTitle.setForeground(PRIMARY_COLOR);
+        section.add(sectionTitle, BorderLayout.NORTH);
+
+        // Lista giudici
+        judgesPanel = new JPanel();
+        judgesPanel.setLayout(new BoxLayout(judgesPanel, BoxLayout.Y_AXIS));
+        judgesPanel.setBackground(LIGHT_GRAY);
+
+        judgesScrollPane = new JScrollPane(judgesPanel);
+        judgesScrollPane.setBorder(BorderFactory.createLineBorder(new Color(220, 220, 220), 1));
+        judgesScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        judgesScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        judgesScrollPane.getVerticalScrollBar().setUnitIncrement(16);
+
+        section.add(judgesScrollPane, BorderLayout.CENTER);
         return section;
     }
 
@@ -354,6 +390,67 @@ public class OrganizerDashboard extends JPanel {
         return card;
     }
 
+    private JPanel createJudgeCard(Partecipant p) {
+        JPanel card = new JPanel(new BorderLayout(15, 15));
+        card.setBackground(CARD_BACKGROUND);
+        card.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(new Color(220, 220, 220), 1),
+                new EmptyBorder(15, 15, 15, 15)));
+        card.setMaximumSize(new Dimension(Integer.MAX_VALUE, 120));
+
+        // Info panel
+        JPanel infoPanel = new JPanel(new BorderLayout(0, 5));
+        infoPanel.setOpaque(false);
+
+        JLabel nameLabel = new JLabel(p.getUsername());
+        nameLabel.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        nameLabel.setForeground(PRIMARY_COLOR);
+
+        JLabel emailLabel = new JLabel(p.getEmail());
+        emailLabel.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        emailLabel.setForeground(new Color(120, 120, 120));
+
+        infoPanel.add(nameLabel, BorderLayout.NORTH);
+        infoPanel.add(emailLabel, BorderLayout.CENTER);
+
+        // Action panel
+        JPanel actionPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        actionPanel.setOpaque(false);
+        JButton promoteButton = new JButton("Promuovi a Giudice");
+        styleButton(promoteButton, JUDGE_COLOR);
+        promoteButton.addActionListener(e -> {
+            // Logica fittizia - solo per demo
+            JOptionPane.showMessageDialog(this,
+                    "Utente " + p.getUsername() + " promosso a giudice!",
+                    "Promozione Completata",
+                    JOptionPane.INFORMATION_MESSAGE);
+            loadMockJudges(); // Ricarica i dati fittizi
+        });
+        actionPanel.add(promoteButton);
+
+        card.add(infoPanel, BorderLayout.CENTER);
+        card.add(actionPanel, BorderLayout.EAST);
+
+        return card;
+
+    }
+
+    private void loadMockJudges() {
+        judgesPanel.removeAll();
+
+        // Dati fittizi per la demo
+        List<Partecipant> mockUsers = controller.getAllPartecipants();
+
+        for (Partecipant pUser : mockUsers) {
+            judgesPanel.add(createJudgeCard(pUser));
+            judgesPanel.add(Box.createVerticalStrut(10));
+        }
+
+        judgesPanel.add(Box.createVerticalGlue());
+        judgesPanel.revalidate();
+        judgesPanel.repaint();
+    }
+
     /**
      * Metodo per ricaricare e visualizzare la lista degli hackathon.
      */
@@ -404,7 +501,10 @@ public class OrganizerDashboard extends JPanel {
         });
 
         // Aggiungi l'ActionListener al bottone di refresh
-        refreshButton.addActionListener(e -> refreshHackathonList());
+        refreshButton.addActionListener(e -> {
+            refreshHackathonList();
+            loadMockJudges();
+        });
     }
 
     private void createHackathon() {

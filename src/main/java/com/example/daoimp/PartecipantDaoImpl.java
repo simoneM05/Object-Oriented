@@ -7,13 +7,14 @@ import com.example.model.Partecipant;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 public class PartecipantDaoImpl implements PartecipantDAO {
 
     @Override
     public Optional<Partecipant> findByEmail(String email) {
-        String sql = "SELECT * FROM partecipant WHERE email = ?";
+        String sql = "SELECT * FROM participants WHERE user_email = ?";
         try (Connection conn = DBConnection.getConnection();
                 PreparedStatement ps = conn.prepareStatement(sql)) {
 
@@ -31,7 +32,7 @@ public class PartecipantDaoImpl implements PartecipantDAO {
     @Override
     public List<Partecipant> findAll() {
         List<Partecipant> list = new ArrayList<>();
-        String sql = "SELECT * FROM partecipant";
+        String sql = "SELECT * FROM participants";
         try (Connection conn = DBConnection.getConnection();
                 Statement st = conn.createStatement();
                 ResultSet rs = st.executeQuery(sql)) {
@@ -48,7 +49,7 @@ public class PartecipantDaoImpl implements PartecipantDAO {
     @Override
     public List<Partecipant> findByHackathonId(int hackathonId) {
         List<Partecipant> list = new ArrayList<>();
-        String sql = "SELECT * FROM partecipant WHERE hackathon_id = ?";
+        String sql = "SELECT * FROM participants WHERE hackathon_id = ?";
         try (Connection conn = DBConnection.getConnection();
                 PreparedStatement ps = conn.prepareStatement(sql)) {
 
@@ -66,7 +67,7 @@ public class PartecipantDaoImpl implements PartecipantDAO {
     @Override
     public List<Partecipant> findByTeamId(int teamId) {
         List<Partecipant> list = new ArrayList<>();
-        String sql = "SELECT * FROM partecipant WHERE team_id = ?";
+        String sql = "SELECT * FROM participants WHERE team_id = ?";
         try (Connection conn = DBConnection.getConnection();
                 PreparedStatement ps = conn.prepareStatement(sql)) {
 
@@ -83,12 +84,17 @@ public class PartecipantDaoImpl implements PartecipantDAO {
 
     @Override
     public boolean save(Partecipant p) {
-        String sql = "INSERT INTO participants (user_email, hackathon_id, team_id) VALUES (?, ?, NULL)";
+        String sql = "INSERT INTO participants (user_email, hackathon_id, team_id) VALUES (?, ?, ?)";
         try (Connection conn = DBConnection.getConnection();
                 PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, p.getEmail());
             ps.setInt(2, p.getHackathonID());
+            if (Objects.nonNull(p.getTeamID())) {
+                ps.setInt(3, p.getTeamID());
+            } else {
+                ps.setNull(3, java.sql.Types.INTEGER);
+            }
 
             return ps.executeUpdate() > 0;
 
@@ -116,17 +122,17 @@ public class PartecipantDaoImpl implements PartecipantDAO {
 
     @Override
     public boolean update(Partecipant p) {
-        String sql = "UPDATE partecipant SET username=?, password=?, first_name=?, last_name=?, hackathon_id=?, team_id=? WHERE email=?";
+        String sql = "UPDATE participants SET hackathon_id = ?, team_id = ? WHERE user_email = ?";
         try (Connection conn = DBConnection.getConnection();
                 PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setString(1, p.getUsername());
-            ps.setString(2, p.getPassword());
-            ps.setString(3, p.getFirst_name());
-            ps.setString(4, p.getLast_name());
-            ps.setInt(5, p.getHackathonID());
-            ps.setInt(6, p.getTeamID());
-            ps.setString(7, p.getEmail());
+            ps.setInt(1, p.getHackathonID());
+            if (Objects.nonNull(p.getTeamID())) {
+                ps.setInt(2, p.getTeamID());
+            } else {
+                ps.setNull(2, Types.INTEGER);
+            }
+            ps.setString(3, p.getEmail());
 
             return ps.executeUpdate() > 0;
 
@@ -138,7 +144,7 @@ public class PartecipantDaoImpl implements PartecipantDAO {
 
     @Override
     public boolean deleteByEmail(String email) {
-        String sql = "DELETE FROM partecipant WHERE email = ?";
+        String sql = "DELETE FROM participants WHERE user_email = ?";
         try (Connection conn = DBConnection.getConnection();
                 PreparedStatement ps = conn.prepareStatement(sql)) {
 
@@ -153,12 +159,9 @@ public class PartecipantDaoImpl implements PartecipantDAO {
 
     private Partecipant mapRowToPartecipant(ResultSet rs) throws SQLException {
         return new Partecipant(
-                rs.getString("email"),
-                rs.getString("username"),
-                rs.getString("password"),
-                rs.getString("first_name"),
-                rs.getString("last_name"),
+                rs.getString("user_email"),
                 rs.getInt("hackathon_id"),
-                rs.getInt("team_id"));
+                rs.getObject("team_id") != null ? rs.getInt("team_id") : null);
     }
+
 }

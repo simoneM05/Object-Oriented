@@ -18,6 +18,13 @@ public class User {
         this.role = Role.USER;
     }
 
+    public User() {
+    }
+
+    public User(String email) {
+        this.email = email;
+    }
+
     // Nuovo costruttore con ruolo
     public User(String email, String username, String password, String first_name, String last_name, Role role) {
         this(email, username, password, first_name, last_name);

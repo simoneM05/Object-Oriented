@@ -15,7 +15,6 @@ import com.example.model.Document;
 import com.example.model.Hackathon;
 import com.example.model.Judge;
 import com.example.model.Partecipant;
-import com.example.model.Role;
 import com.example.model.Team;
 
 import java.util.List;
@@ -58,6 +57,18 @@ public class ControllerGui {
     public boolean savePartecipant(Partecipant p) {
         PartecipantDAO.save(p);
         return true;
+    }
+
+    public Partecipant getPartecipantByEmail(String email) {
+        return PartecipantDAO.findByEmail(email).orElse(null);
+    }
+
+    public Hackathon getHackathonById(int id) {
+        return hackathonDAO.findById(id).orElse(null);
+    }
+
+    public List<Partecipant> getAllPartecipants() {
+        return PartecipantDAO.findAll();
     }
 
     public List<Document> getDocumentsByHackathonId(int hackathonId, String judgeEmail) {

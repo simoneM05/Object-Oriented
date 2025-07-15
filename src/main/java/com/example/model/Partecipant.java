@@ -19,6 +19,13 @@ public class Partecipant extends User {
         this.TeamID = TeamID;
     }
 
+    public Partecipant(String email, int hackathonID, Integer teamID) {
+        super();
+        this.email = email;
+        this.HackathonID = hackathonID;
+        this.TeamID = teamID;
+    }
+
     public int getHackathonID() {
         return HackathonID;
     }
